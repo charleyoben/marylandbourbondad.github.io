@@ -1,40 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Pour | Maryland Bourbon Dad</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBD | The Pour</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.tailwind.config = {
+            theme: { extend: { colors: { bourbon: { bg: '#F9F6F0', text: '#2D231E', accent: '#C46210', card: '#EBE3D5', border: '#D4C5B0' } } } }
+        };
+    </script>
 </head>
-<body>
-<div id="site-nav"></div>
-<div class="page-banner">
-  <div class="eyebrow">Maryland Bourbon Dad</div>
-  <h1>The Pour</h1>
-  <p>Recipes, field notes, and the MBD Lounge — everything that happens once the bourbon is in the glass.</p>
-</div>
-<div class="content-wide" style="padding-top:48px;">
-  <div class="card-grid">
-    <a href="behind-the-bar.html" class="card" style="text-decoration:none;">
-      <div class="card-label">The Pour</div>
-      <h3>Behind the Bar</h3>
-      <p>Cocktail recipes, classic builds, and techniques for getting the most out of what's in your cabinet. Practical bartending for real people.</p>
-      <span class="card-link">Explore →</span>
-    </a>
-    <a href="field-notes.html" class="card" style="text-decoration:none;">
-      <div class="card-label">The Pour</div>
-      <h3>MBD Field Notes</h3>
-      <p>Short-form notes from bars, restaurants, and tastings. Quick impressions, honest takes, no fluff.</p>
-      <span class="card-link">Read the Notes →</span>
-    </a>
-    <a href="lounge.html" class="card" style="text-decoration:none;">
-      <div class="card-label">The Pour</div>
-      <h3>The MBD Lounge</h3>
-      <p>Lifestyle content, gathering ideas, and the culture around bourbon. The social side of the hobby.</p>
-      <span class="card-link">Into the Lounge →</span>
-    </a>
-  </div>
-</div>
-<div id="site-footer"></div>
-<script src="nav.js"></script>
+<body class="bg-bourbon-bg text-bourbon-text p-4">
+
+    <header class="py-16 md:py-24 px-4 text-center border-b-4 border-bourbon-accent bg-white mb-12 shadow-inner">
+        <div class="max-w-4xl mx-auto flex flex-col items-center">
+            <div class="w-20 h-20 mb-5 rounded-full overflow-hidden bg-white shadow-xl border-2 border-bourbon-border flex items-center justify-center">
+                <span style="font-family:Georgia,serif;font-size:28px;font-weight:bold;color:#C46210">MBD</span>
+            </div>
+            <p class="text-xs font-bold uppercase tracking-[0.4em] text-bourbon-accent mb-3">Maryland Bourbon Dad</p>
+            <h1 class="text-5xl md:text-7xl font-serif font-bold mb-4 tracking-tighter text-bourbon-text">The Pour</h1>
+            <p class="text-lg md:text-xl text-bourbon-accent font-serif italic uppercase tracking-widest">Education. Opinion. The Occasional Rant.</p>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto py-8 space-y-20">
+
+        <article>
+
+            <div class="mb-10">
+                <div class="flex items-center gap-3 mb-5">
+                    <span class="text-[10px] font-bold uppercase tracking-widest bg-bourbon-accent text-white px-3 py-1 rounded-full">Hosting Guide</span>
+                    <span class="text-[10px] text-gray-400 uppercase tracking-widest">The MBD Playbook</span>
+                </div>
+                <h2 class="text-3xl md:text-5xl font-serif font-bold leading-tight mb-6 text-bourbon-text">
+                    The Maryland Bourbon Dad's Guide to Hosting (Without the Stress)
+                </h2>
+                <div class="w-16 h-1 bg-bourbon-accent rounded-full mb-6"></div>
+                <p class="text-xl leading-relaxed text-gray-600 font-serif italic">
+                    Hosting a bourbon tasting shouldn't feel like a chemistry final or a high-stakes board meeting. Whether you're a seasoned collector or just starting to wonder why people wait in line for a bottle with a horse on top, the goal is simple: share good pours with good people.
+                </p>
+            </div>
+
+            <div class="prose max-w-none mb-12">
+                <p class="text-gray-700 leading-relaxed text-lg">
+                    Here are three ways to host a legendary session in your own "Dad cave."
+                </p>
+            </div>
+
+            <!-- Method 1 -->
+            <div class="bg-white rounded-[2rem] border border-bourbon-border shadow-sm overflow-hidden mb-8">
+                <div class="bg-bourbon-text p-6 md:p-8">
+                    <div class="flex items-center gap-4">
+                        <span class="text-4xl font-serif font-black text-bourbon-accent opacity-60">01</span>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-serif font-bold text-white">The "Show &amp; Tell"</h3>
+                            <p class="text-bourbon-accent text-sm font-bold uppercase tracking-widest">The Easy Entry</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 md:p-8 space-y-6">
+                    <p class="text-gray-700 leading-relaxed">This is the low-stress gold standard. Everyone brings a bottle, and we pass them around.</p>
+                    <div class="space-y-4">
+                        <div class="flex gap-4 items-start">
+                            <span class="text-bourbon-accent font-bold text-sm uppercase tracking-widest min-w-[80px] pt-1">The Intro</span>
+                            <p class="text-gray-600 leading-relaxed text-sm">Have each guest give a quick "elevator pitch" for their bottle: the distillery, the proof, and the age.</p>
+                        </div>
+                        <div class="w-full h-px bg-bourbon-border"></div>
+                        <div class="flex gap-4 items-start">
+                            <span class="text-bourbon-accent font-bold text-sm uppercase tracking-widest min-w-[80px] pt-1">The Story</span>
+                            <p class="text-gray-600 leading-relaxed text-sm">The best part of bourbon is the hunt. Did you find it gathering dust in a small-town shop, or was it a gift from someone who knows your tastes?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Method 2 -->
+            <div class="bg-white rounded-[2rem] border border-bourbon-border shadow-sm overflow-hidden mb-8">
+                <div class="bg-[#2C1A0E] p-6 md:p-8">
+                    <div class="flex items-center gap-4">
+                        <span class="text-4xl font-serif font-black text-bourbon-accent opacity-60">02</span>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-serif font-bold text-white">The "Blind Reveal"</h3>
+                            <p class="text-bourbon-accent text-sm font-bold uppercase tracking-widest">Check Your Ego at the Door</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 md:p-8 space-y-6">
+                    <p class="text-gray-700 leading-relaxed">We all have labels we think we love, but a blind tasting keeps us honest.</p>
+                    <div class="space-y-4">
+                        <div class="flex gap-4 items-start">
+                            <span class="text-bourbon-accent font-bold text-sm uppercase tracking-widest min-w-[80px] pt-1">The Disguise</span>
+                            <p class="text-gray-600 leading-relaxed text-sm">Use brown bags or wine gift bags to hide the bottle shapes — experienced drinkers can spot a Peerless or Blanton's bottle from a mile away.</p>
+                        </div>
+                        <div class="w-full h-px bg-bourbon-border"></div>
+                        <div class="flex gap-4 items-start">
+                            <span class="text-bourbon-accent font-bold text-sm uppercase tracking-widest min-w-[80px] pt-1">The Verdict</span>
+                            <p class="text-gray-600 leading-relaxed text-sm">Provide paper and pens for everyone to rank their favorites before the big reveal. It's always a riot when the $30 bottle beats the $150 "unicorn."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Method 3 -->
+            <div class="bg-white rounded-[2rem] border border-bourbon-border shadow-sm overflow-hidden mb-12">
+                <div class="bg-bourbon-accent p-6 md:p-8">
+                    <div class="flex items-center gap-4">
+                        <span class="text-4xl font-serif font-black text-white opacity-40">03</span>
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-serif font-bold text-white">The "Bourbon Stakes" Poker Night</h3>
+                            <p class="text-white/70 text-sm font-bold uppercase tracking-widest">High Stakes. No Cash.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 md:p-8 space-y-6">
+                    <p class="text-gray-700 leading-relaxed">If you want to keep the night moving, pair the tasting with a poker tournament (no cash, just chips).</p>
+                    <div class="space-y-4">
+                        <div class="flex gap-4 items-start">
+                            <span class="text-bourbon-accent font-bold text-sm uppercase tracking-widest min-w-[80px] pt-1">The Prize Pool</span>
+                            <p class="text-gray-600 leading-relaxed text-sm">Every guest brings a bottle to the "pot."</p>
+                        </div>
+                        <div class="w-full h-px bg-bourbon-border"></div>
+                        <div class="flex gap-4 items-start">
+                            <span class="text-bourbon-accent font-bold text-sm uppercase tracking-widest min-w-[80px] pt-1">The Draft</span>
+                            <p class="text-gray-600 leading-relaxed text-sm">The tournament winner gets first pick of the bottles to take home, second place gets next, and so on.</p>
+                        </div>
+                        <div class="w-full h-px bg-bourbon-border"></div>
+                        <div class="flex gap-4 items-start">
+                            <span class="text-bourbon-accent font-bold text-sm uppercase tracking-widest min-w-[80px] pt-1">The Bonus</span>
+                            <p class="text-gray-600 leading-relaxed text-sm">This ensures you, as the host, aren't left with ten open bottles taking up your precious shelf space.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toolkit Section -->
+            <div class="bg-bourbon-text rounded-[2rem] p-8 md:p-10 text-white mb-12">
+                <h3 class="text-2xl md:text-3xl font-serif font-bold mb-2 text-bourbon-accent">The Dad's Toolkit</h3>
+                <p class="text-white/50 text-xs uppercase tracking-widest mb-8 font-bold">Glassware &amp; Prep</p>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+                        <div class="text-2xl mb-3">🥃</div>
+                        <h4 class="font-bold text-bourbon-accent mb-2 uppercase tracking-wide text-sm">The Glass</h4>
+                        <p class="text-gray-300 text-sm leading-relaxed">Use a Glencairn if you have them — they're designed to funnel the aroma. If not, a standard rocks glass works just fine for a "Dad-style" pour.</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+                        <div class="text-2xl mb-3">💧</div>
+                        <h4 class="font-bold text-bourbon-accent mb-2 uppercase tracking-wide text-sm">The Water</h4>
+                        <p class="text-gray-300 text-sm leading-relaxed">Keep a small dropper or pitcher of filtered water nearby. A couple of drops can "open up" a high-proof bourbon and reveal flavors you'd otherwise miss.</p>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6">
+                        <div class="text-2xl mb-3">🧊</div>
+                        <h4 class="font-bold text-bourbon-accent mb-2 uppercase tracking-wide text-sm">Ice</h4>
+                        <p class="text-gray-300 text-sm leading-relaxed">While most tastings are done neat, don't let the bourbon snobs tell you how to live. If you like a big clear rock in your glass, go for it.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Store CTA -->
+            <div class="bg-bourbon-card border border-bourbon-border rounded-[2rem] p-8 text-center">
+                <p class="text-xs uppercase font-bold tracking-widest text-gray-400 mb-3">Ready to Host?</p>
+                <h4 class="text-2xl font-serif font-bold mb-3 text-bourbon-text">Grab the MBD Bourbon Party Kit</h4>
+                <p class="text-gray-500 text-sm leading-relaxed mb-6 max-w-md mx-auto">Scorecards, tasting sheets, and everything else you need to run a legendary blind reveal — available in the MBD Store.</p>
+                <a href="store.html" class="inline-block bg-bourbon-accent text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-bourbon-text transition-all">Visit the Store &rarr;</a>
+            </div>
+
+        </article>
+
+    </main>
+
+    <footer class="mt-20 py-12 text-center opacity-50">
+        <p class="text-[10px] uppercase tracking-[0.4em]">Maryland Bourbon Dad • Est. 2024 · <a href="index.html" class="underline">← Home</a></p>
+    </footer>
+
 </body>
 </html>

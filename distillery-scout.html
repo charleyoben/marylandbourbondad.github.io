@@ -1,58 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Distillery Scout | Maryland Bourbon Dad</title>
-<link rel="stylesheet" href="style.css">
-<style>
-.distillery-card { background: var(--white); border: 1px solid var(--parch); border-radius: 4px; padding: 32px; margin-bottom: 24px; }
-.distillery-card .d-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
-.distillery-card h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--brown); }
-.distillery-card .d-location { font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
-.mbd-rating { background: var(--brown); color: var(--amber); font-family: 'Cinzel', serif; font-size: .65rem; letter-spacing: .12em; padding: 6px 14px; border-radius: 2px; white-space: nowrap; }
-.distillery-card p { font-size: .92rem; margin-bottom: 10px; }
-.d-picks { background: var(--cream); padding: 14px 18px; border-radius: 3px; margin-top: 12px; }
-.d-picks h4 { font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
-.d-picks ul { list-style: none; }
-.d-picks ul li { font-size: .88rem; padding: 3px 0; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBD | Distillery Scout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bourbon: { bg:'#F9F6F0', text:'#2D231E', accent:'#C46210', card:'#EBE3D5', border:'#D4C5B0' }
+                    },
+                    fontFamily: { serif: ['Georgia', 'Cambria', 'serif'] }
+                }
+            }
+        };
+    </script>
+    <style>
+        body { background-color: #F9F6F0; color: #2D231E; }
+        .verdict-must       { background:#FEF3C7; color:#92400E; border-color:#FCD34D; }
+        .verdict-expert     { background:#EDE9FE; color:#5B21B6; border-color:#C4B5FD; }
+        .verdict-gem        { background:#D1FAE5; color:#065F46; border-color:#6EE7B7; }
+        .verdict-approved   { background:#E0F2FE; color:#0C4A6E; border-color:#7DD3FC; }
+        .verdict-casual     { background:#F3F4F6; color:#374151; border-color:#D1D5DB; }
+        .verdict-notvisited { background:#FFF7ED; color:#9A3412; border-color:#FDBA74; }
+        .card-enter { animation: cardIn 0.35s ease both; }
+        @keyframes cardIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+        .tag-pill {
+            display:inline-flex; align-items:center; gap:3px; font-size:9px; font-weight:700;
+            letter-spacing:.08em; text-transform:uppercase; padding:2px 8px; border-radius:999px;
+            border:1px solid #D4C5B0; background:#F9F6F0; color:#6B7280;
+        }
+        .filter-btn { transition: all .15s; }
+        .filter-btn.active { background: #C46210; color: #fff; border-color: #C46210; }
+        .spinner { width:28px; height:28px; border:3px solid #D4C5B0; border-top-color:#C46210; border-radius:50%; animation: spin .7s linear infinite; margin: 0 auto; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+        .signature-strip { background: #F9F3E8; border: 1px solid #D4C5B0; border-radius: 8px; padding: 8px 12px; margin-top: 12px; }
+        .card-unvisited { opacity: 0.82; border-style: dashed; }
+        .card-unvisited:hover { opacity: 1; }
+    </style>
 </head>
-<body>
-<div id="site-nav"></div>
-<div class="page-banner">
-  <div class="eyebrow">Maryland Bourbon Dad</div>
-  <h1>The Distillery Scout</h1>
-  <p>Maryland distilleries, reviewed and mapped. Old Line State pride — we make good bourbon here.</p>
+<body class="antialiased">
+
+<div class="max-w-6xl mx-auto px-4 py-8">
+
+    <header class="mb-10 text-center py-10 px-4 border-b border-bourbon-border">
+        <div class="w-16 h-16 mb-4 rounded-full overflow-hidden bg-white shadow-md border border-bourbon-border mx-auto flex items-center justify-center">
+            <span class="text-2xl">🥃</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-serif font-bold text-bourbon-accent mb-2 tracking-tight">Maryland Distillery Scout</h1>
+        <p class="text-base text-gray-500 italic max-w-xl mx-auto">
+            "Honest takes on Old Line State distilleries. Visited means visited. Not visited means not visited."
+        </p>
+        <div class="mt-4">
+            <a href="index.html" class="text-[10px] font-bold uppercase tracking-widest text-bourbon-accent border-b border-bourbon-accent pb-0.5">← Home</a>
+        </div>
+    </header>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-2xl border border-bourbon-border p-5 text-center shadow-sm">
+            <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">On The Map</div>
+            <div id="stat-total" class="text-3xl font-serif font-bold">—</div>
+        </div>
+        <div class="bg-white rounded-2xl border border-bourbon-border border-l-4 border-l-bourbon-accent p-5 text-center shadow-sm">
+            <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Dad's Been There</div>
+            <div id="stat-visited" class="text-3xl font-serif font-bold text-bourbon-accent">—</div>
+        </div>
+        <div class="bg-white rounded-2xl border border-bourbon-border p-5 text-center shadow-sm">
+            <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">On The List</div>
+            <div id="stat-notvisited" class="text-3xl font-serif font-bold">—</div>
+        </div>
+        <div class="bg-bourbon-card rounded-2xl border border-bourbon-border p-5 text-center shadow-sm">
+            <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Must Visits</div>
+            <div id="stat-must" class="text-3xl font-serif font-bold">—</div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-bourbon-border shadow-sm p-5 mb-8">
+        <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <input type="text" id="search" placeholder="Find by name or city…" oninput="renderScout()"
+                class="w-full md:w-80 px-5 py-3 rounded-full border border-bourbon-border bg-bourbon-bg text-sm focus:outline-none focus:ring-2 focus:ring-bourbon-accent">
+            <div class="flex flex-wrap justify-center gap-2" id="tag-filters">
+                <button class="filter-btn tag-pill" data-tag="Tours"           onclick="toggleFilter(this)">🚪 Tours</button>
+                <button class="filter-btn tag-pill" data-tag="Cocktails"       onclick="toggleFilter(this)">🍸 Cocktails</button>
+                <button class="filter-btn tag-pill" data-tag="Food"            onclick="toggleFilter(this)">🍔 Food</button>
+                <button class="filter-btn tag-pill" data-tag="Family Friendly" onclick="toggleFilter(this)">👨‍👩‍👧 Family</button>
+            </div>
+            <select id="verdict-filter" onchange="renderScout()" class="px-4 py-3 rounded-full border border-bourbon-border bg-bourbon-bg text-xs font-bold uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-bourbon-accent">
+                <option value="">All Verdicts</option>
+                <option value="Must Visit">Must Visit</option>
+                <option value="Expert Pick">Expert Pick</option>
+                <option value="Hidden Gem">Hidden Gem</option>
+                <option value="Dad Approved">Dad Approved</option>
+                <option value="Casual Sip">Casual Sip</option>
+                <option value="Not Visited Yet">Not Visited Yet</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="admin-tools" class="hidden mb-8 bg-white p-8 rounded-2xl border-2 border-dashed border-bourbon-accent shadow-lg">
+        <h3 class="text-sm font-bold uppercase tracking-widest text-bourbon-accent mb-6 flex items-center gap-2">🛠️ Add / Update Distillery Entry</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+            <div class="space-y-3">
+                <input type="text" id="d-name"      placeholder="Distillery Name"        class="w-full p-3 rounded-xl border border-bourbon-border bg-bourbon-bg focus:outline-none focus:ring-1 focus:ring-bourbon-accent text-sm">
+                <input type="text" id="d-city"      placeholder="City (e.g. Baltimore)"  class="w-full p-3 rounded-xl border border-bourbon-border bg-bourbon-bg focus:outline-none focus:ring-1 focus:ring-bourbon-accent text-sm">
+                <select id="d-verdict" class="w-full p-3 rounded-xl border border-bourbon-border bg-white text-sm focus:outline-none focus:ring-1 focus:ring-bourbon-accent">
+                    <option>Not Visited Yet</option>
+                    <option>Must Visit</option>
+                    <option>Expert Pick</option>
+                    <option>Hidden Gem</option>
+                    <option>Dad Approved</option>
+                    <option>Casual Sip</option>
+                </select>
+                <input type="text" id="d-signature" placeholder="Best Pour / Signature Bottle (if visited)" class="w-full p-3 rounded-xl border border-bourbon-border bg-bourbon-bg focus:outline-none focus:ring-1 focus:ring-bourbon-accent text-sm">
+            </div>
+            <div class="space-y-3">
+                <textarea id="d-desc" placeholder="Dad's honest take — only fill this in if you've actually been there." class="w-full p-3 rounded-xl border border-bourbon-border bg-bourbon-bg h-36 resize-none focus:outline-none focus:ring-1 focus:ring-bourbon-accent text-sm"></textarea>
+                <p class="text-[10px] text-gray-400 italic">Leave blank if you haven't visited. Honesty is the brand.</p>
+            </div>
+        </div>
+        <div class="flex flex-wrap items-center justify-between gap-4">
+            <div class="flex flex-wrap gap-4">
+                <label class="flex items-center gap-2 text-sm font-medium"><input type="checkbox" id="t-tours"     class="accent-bourbon-accent"> Tours</label>
+                <label class="flex items-center gap-2 text-sm font-medium"><input type="checkbox" id="t-cocktails" class="accent-bourbon-accent"> Cocktails</label>
+                <label class="flex items-center gap-2 text-sm font-medium"><input type="checkbox" id="t-food"      class="accent-bourbon-accent"> Food</label>
+                <label class="flex items-center gap-2 text-sm font-medium"><input type="checkbox" id="t-family"    class="accent-bourbon-accent"> Family Friendly</label>
+            </div>
+            <button onclick="addDistillery()" class="bg-bourbon-accent text-white px-8 py-3 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-bourbon-text transition-colors shadow-md">Add to Scout</button>
+        </div>
+    </div>
+
+    <div id="distillery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-20">
+        <div class="col-span-full py-16 text-center" id="loading-state">
+            <div class="spinner mb-4"></div>
+            <p class="text-sm text-gray-400 uppercase tracking-widest font-bold">Loading Scout Report…</p>
+        </div>
+    </div>
+
+    <footer class="py-12 border-t border-bourbon-border text-center">
+        <div id="admin-login-ui">
+            <p class="text-[10px] text-gray-400 mb-3 uppercase tracking-[.2em] font-bold">Scout Authority Only</p>
+            <div class="flex justify-center gap-2">
+                <input type="password" id="admin-pin-input" placeholder="PIN"
+                    class="w-24 p-2 text-center border border-bourbon-border rounded-lg bg-transparent text-sm focus:outline-none focus:ring-1 focus:ring-bourbon-accent">
+                <button onclick="checkPin()" class="text-[10px] bg-bourbon-card px-5 py-2 rounded-lg border border-bourbon-border font-bold uppercase tracking-widest hover:bg-white transition-colors shadow-sm">Unlock</button>
+            </div>
+        </div>
+    </footer>
+
 </div>
-<div class="content-wrap">
-  <div class="prose" style="margin-bottom:36px;">
-    <p>Maryland has a real distilling tradition — rye whiskey was a Maryland thing long before Kentucky took the crown. The modern craft scene is young but growing fast. Here's where I've been and what I think.</p>
-  </div>
 
-  <div class="distillery-card">
-    <div class="d-header"><h3>Sagamore Spirit</h3><span class="mbd-rating">MBD: Must Visit</span></div>
-    <div class="d-location">📍 Port Covington, Baltimore, MD</div>
-    <p>The most polished distillery experience in Maryland by a significant margin. The facility at Port Covington is genuinely impressive — massive rickhouses, a well-run tasting room, and guides who know their material. The water story (Maryland limestone-filtered spring water) isn't just marketing.</p>
-    <p>The product lineup is solid and improving. The Straight Rye is the baseline; the Double Oak and cask-strength expressions are where it gets interesting. Tour prices are fair and the tasting is generous.</p>
-    <div class="d-picks"><h4>What to Buy</h4><ul><li>🥇 Double Oak Rye — the flagship expression</li><li>🥈 Straight Rye — everyday sipper, priced right</li><li>🔍 Limited Cask Strength — grab it when you see it</li></ul></div>
-  </div>
+<div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-bourbon-text text-white px-6 py-3 rounded-full shadow-2xl transition-opacity opacity-0 pointer-events-none text-sm font-bold z-50">Action Successful</div>
 
-  <div class="distillery-card">
-    <div class="d-header"><h3>Old Line Spirits</h3><span class="mbd-rating">MBD: Worth the Drive</span></div>
-    <div class="d-location">📍 Baltimore, MD</div>
-    <p>Old Line does things a little differently — they focus on American Single Malt, which puts them in a less-crowded category and lets their grain work speak without the bourbon reference points. The tasting room in Baltimore is casual and genuinely fun, not corporate.</p>
-    <p>The rum lineup has improved significantly over the last two years. If you haven't been back recently, it's worth another visit.</p>
-    <div class="d-picks"><h4>What to Buy</h4><ul><li>🥇 American Single Malt — the standout</li><li>🥈 Aged Rum — better than you'd expect</li></ul></div>
-  </div>
+<script>
+    const API_URL   = 'https://script.google.com/macros/s/AKfycbyAz0K3fcbxI-w17t9lBeMpimP4gNMhYP9_Bg2lYfmbA8CIjYxsE1tm3pTobbYWjW4q/exec';
+    const SHEET     = 'DistilleryScout';
+    const ADMIN_PIN = '1924';
 
-  <div class="distillery-card">
-    <div class="d-header"><h3>Tenth Ward Distilling</h3><span class="mbd-rating">MBD: Local Gem</span></div>
-    <div class="d-location">📍 Frederick, MD</div>
-    <p>Frederick's craft scene is underrated across the board, and Tenth Ward is part of why. Smaller operation, more experimental, and more willing to try things that don't fit a standard category. The absinthe alone is worth the trip if you're into that.</p>
-    <div class="d-picks"><h4>What to Try</h4><ul><li>🥇 Maryland Straight Rye Whiskey</li><li>🔍 Experimental releases — ask what's in the tasting room</li></ul></div>
-  </div>
-</div>
-<div id="site-footer"></div>
-<script src="nav.js"></script>
+    let distilleries = [], activeFilters = [], isAdmin = false;
+
+    const verdictClass = {
+        'Must Visit':'verdict-must', 'Expert Pick':'verdict-expert', 'Hidden Gem':'verdict-gem',
+        'Dad Approved':'verdict-approved', 'Casual Sip':'verdict-casual', 'Not Visited Yet':'verdict-notvisited',
+    };
+    const verdictOrder = ['Must Visit','Expert Pick','Hidden Gem','Dad Approved','Casual Sip','Not Visited Yet'];
+
+    const showToast = (msg) => {
+        const t = document.getElementById('toast');
+        t.innerText = msg; t.classList.remove('opacity-0');
+        setTimeout(() => t.classList.add('opacity-0'), 3000);
+    };
+
+    const apiFetch = () => new Promise((resolve, reject) => {
+        const cb = 'mbd_cb_' + Date.now();
+        const script = document.createElement('script');
+        window[cb] = (data) => { delete window[cb]; script.remove(); resolve(Array.isArray(data) ? data : []); };
+        script.onerror = () => { delete window[cb]; script.remove(); reject(new Error('JSONP failed')); };
+        script.src = `${API_URL}?sheet=${SHEET}&callback=${cb}`;
+        document.head.appendChild(script);
+    });
+
+    const apiPost = async (payload) => {
+        payload.sheet = SHEET;
+        const res = await fetch(API_URL, { method:'POST', body: JSON.stringify(payload) });
+        return res.json();
+    };
+
+    const loadDistilleries = async () => {
+        try {
+            const data = await apiFetch();
+            distilleries = Array.isArray(data) ? data : [];
+            updateStats(); renderScout();
+            document.getElementById('loading-state').style.display = 'none';
+        } catch(e) {
+            document.getElementById('loading-state').innerHTML = '<p class="text-red-400 font-bold text-sm py-8">⚠️ Could not load data. Check your Apps Script URL and sheet tab name.</p>';
+        }
+    };
+
+    const updateStats = () => {
+        const visited    = distilleries.filter(d => d.verdict !== 'Not Visited Yet');
+        const notVisited = distilleries.filter(d => d.verdict === 'Not Visited Yet');
+        const mustVisit  = distilleries.filter(d => d.verdict === 'Must Visit');
+        document.getElementById('stat-total').innerText      = distilleries.length;
+        document.getElementById('stat-visited').innerText    = visited.length;
+        document.getElementById('stat-notvisited').innerText = notVisited.length;
+        document.getElementById('stat-must').innerText       = mustVisit.length;
+    };
+
+    window.toggleFilter = (btn) => {
+        const tag = btn.dataset.tag;
+        if (activeFilters.includes(tag)) { activeFilters = activeFilters.filter(t => t !== tag); btn.classList.remove('active'); }
+        else { activeFilters.push(tag); btn.classList.add('active'); }
+        renderScout();
+    };
+
+    const renderScout = () => {
+        const grid = document.getElementById('distillery-grid');
+        const searchVal = document.getElementById('search').value.toLowerCase();
+        const verdictFilter = document.getElementById('verdict-filter').value;
+
+        const filtered = distilleries.filter(d => {
+            const matchSearch  = d.name.toLowerCase().includes(searchVal) || (d.city||'').toLowerCase().includes(searchVal);
+            const matchVerdict = !verdictFilter || d.verdict === verdictFilter;
+            const tagsArr      = d.tags ? d.tags.split(',').map(t => t.trim()) : [];
+            const matchTags    = activeFilters.length === 0 || activeFilters.every(f => tagsArr.includes(f));
+            return matchSearch && matchVerdict && matchTags;
+        });
+
+        filtered.sort((a, b) => {
+            const ai = verdictOrder.indexOf(a.verdict), bi = verdictOrder.indexOf(b.verdict);
+            if (ai !== bi) return ai - bi;
+            return a.name.localeCompare(b.name);
+        });
+
+        if (filtered.length === 0) { grid.innerHTML = `<div class="col-span-full py-16 text-center text-gray-400 italic text-sm">No distilleries match your filters.</div>`; return; }
+
+        grid.innerHTML = filtered.map((d, i) => {
+            const isNotVisited = d.verdict === 'Not Visited Yet';
+            const tagsArr = d.tags ? d.tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+            const vClass = verdictClass[d.verdict] || 'verdict-casual';
+            const tagIcons = { 'Tours':'🚪', 'Cocktails':'🍸', 'Food':'🍔', 'Family Friendly':'👨‍👩‍👧' };
+            const tagPills = tagsArr.map(t => `<span class="tag-pill">${tagIcons[t]||''} ${t}</span>`).join('');
+            const cardClass = isNotVisited ? 'card-unvisited' : '';
+            const dadsSection = !isNotVisited && d.desc
+                ? `<p class="text-sm text-gray-600 leading-relaxed mt-2">${d.desc}</p>`
+                : isNotVisited ? `<p class="text-sm text-gray-400 italic mt-2">Haven't made it here yet — on the list.</p>` : '';
+            const sigSection = d.signature
+                ? `<div class="signature-strip"><span class="text-[10px] font-bold uppercase tracking-widest text-bourbon-accent">Best Pour · </span><span class="text-sm font-medium text-bourbon-text">${d.signature}</span></div>` : '';
+            const adminBtns = isAdmin
+                ? `<div class="mt-4 pt-4 border-t border-bourbon-border"><button onclick="deleteDistillery(${d.rowIndex})" class="text-[10px] text-red-400 hover:text-red-600 uppercase font-bold tracking-widest transition-colors">Delete Entry</button></div>` : '';
+
+            return `<div class="card-enter bg-white rounded-xl border border-bourbon-border shadow-sm hover:shadow-md transition-all p-6 flex flex-col justify-between ${cardClass}" style="animation-delay:${i*30}ms">
+                <div>
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-bold uppercase tracking-widest text-bourbon-accent">${d.city||''}</span>
+                        <span class="text-[10px] font-bold uppercase px-3 py-1 rounded-full border ${vClass}">${d.verdict||''}</span>
+                    </div>
+                    <h3 class="text-lg font-serif font-bold leading-tight">${d.name||''}</h3>
+                    ${dadsSection}${sigSection}
+                </div>
+                <div><div class="flex flex-wrap gap-2 mt-4">${tagPills}</div>${adminBtns}</div>
+            </div>`;
+        }).join('');
+    };
+
+    window.addDistillery = async () => {
+        const name = document.getElementById('d-name').value.trim();
+        const city = document.getElementById('d-city').value.trim();
+        const verdict = document.getElementById('d-verdict').value;
+        const desc = document.getElementById('d-desc').value.trim();
+        const signature = document.getElementById('d-signature').value.trim();
+        const tags = [];
+        if (document.getElementById('t-tours').checked) tags.push('Tours');
+        if (document.getElementById('t-cocktails').checked) tags.push('Cocktails');
+        if (document.getElementById('t-food').checked) tags.push('Food');
+        if (document.getElementById('t-family').checked) tags.push('Family Friendly');
+        if (!name || !city) return showToast('Name and City are required.');
+        try {
+            await apiPost({ action:'add', name, city, verdict, desc, signature, tags: tags.join(',') });
+            ['d-name','d-city','d-desc','d-signature'].forEach(id => document.getElementById(id).value = '');
+            ['t-tours','t-cocktails','t-food','t-family'].forEach(id => document.getElementById(id).checked = false);
+            document.getElementById('d-verdict').selectedIndex = 0;
+            showToast('Added to Scout Report!');
+            await loadDistilleries();
+        } catch(e) { showToast('Error adding entry. Check your Apps Script.'); }
+    };
+
+    window.deleteDistillery = async (rowIndex) => {
+        if (!confirm('Remove this distillery from the Scout Report?')) return;
+        try { await apiPost({ action:'delete', rowIndex }); showToast('Entry removed.'); await loadDistilleries(); }
+        catch(e) { showToast('Error deleting entry.'); }
+    };
+
+    window.checkPin = () => {
+        const input = document.getElementById('admin-pin-input');
+        if (input.value.trim() === ADMIN_PIN) {
+            isAdmin = true;
+            document.getElementById('admin-login-ui').classList.add('hidden');
+            document.getElementById('admin-tools').classList.remove('hidden');
+            renderScout();
+            showToast('Scout Tools Unlocked');
+        } else { showToast('Incorrect PIN'); input.value = ''; }
+    };
+
+    document.getElementById('admin-pin-input').addEventListener('keypress', e => { if (e.key==='Enter') checkPin(); });
+    loadDistilleries();
+</script>
+
 </body>
 </html>

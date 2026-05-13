@@ -1,58 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Beyond Maryland | Maryland Bourbon Dad</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBD | Beyond Maryland</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.tailwind.config = {
+            theme: { extend: { colors: { bourbon: { bg: '#F9F6F0', text: '#2D231E', accent: '#C46210', card: '#EBE3D5', border: '#D4C5B0' } } } }
+        };
+    </script>
+    <style>body { background-color: #F9F6F0; color: #2D231E; }</style>
 </head>
-<body>
-<div id="site-nav"></div>
-<div class="page-banner">
-  <div class="eyebrow">Maryland Bourbon Dad</div>
-  <h1>Beyond Maryland</h1>
-  <p>When the hunt takes me outside state lines — Kentucky, Tennessee, and everywhere the good stuff lives.</p>
-</div>
-<div class="content-wrap">
-  <div class="prose" style="margin-bottom: 36px;">
-    <p>Maryland pride is real, but the bourbon world doesn't stop at the state line. This section covers distillery visits, bottle finds, and regional intel from trips beyond the Old Line State. Mostly Kentucky, occasionally further.</p>
-  </div>
+<body class="antialiased p-4">
 
-  <div class="section-title">Kentucky Trail Notes</div>
-  <p class="section-sub">Distillery visits, bourbon trail intel, and what's actually worth the stop.</p>
+    <div class="max-w-6xl mx-auto">
 
-  <div class="card-grid">
-    <div class="card">
-      <div class="card-label">Kentucky · Bardstown</div>
-      <h3>Bardstown Bourbon Company</h3>
-      <p>The collaborative distillery model here is genuinely interesting. Multiple producer relationships and a serious food program make this more than a standard tour. The Fusion series is worth tracking.</p>
-    </div>
-    <div class="card">
-      <div class="card-label">Kentucky · Loretto</div>
-      <h3>Maker's Mark</h3>
-      <p>The campus is beautiful and the tour is well-produced. The Private Select program at the gift shop is the real draw if you want something exclusive. Budget extra time for the gift shop.</p>
-    </div>
-    <div class="card">
-      <div class="card-label">Kentucky · Lawrenceburg</div>
-      <h3>Four Roses</h3>
-      <p>The Spanish Mission architecture alone makes it worth the stop. More importantly: the Limited Small Batch releases are often available in the tasting room that you won't find at retail. Show up with a list.</p>
-    </div>
-    <div class="card">
-      <div class="card-label">Kentucky · Louisville</div>
-      <h3>Angel's Envy</h3>
-      <p>Urban distillery in the Nulu neighborhood, walkable from good restaurants. The finishing program is on full display here. If the Triple Oak is in the tasting room, taste it before you buy anywhere else — context helps.</p>
-    </div>
-  </div>
+        <header class="py-16 md:py-24 px-4 text-center border-b-4 border-bourbon-accent bg-white mb-12 shadow-inner rounded-[2rem]">
+            <div class="max-w-4xl mx-auto flex flex-col items-center">
+                <p class="text-xs font-bold uppercase tracking-[0.4em] text-bourbon-accent mb-4">Maryland Bourbon Dad</p>
+                <h1 class="text-5xl md:text-7xl font-serif font-bold mb-4 tracking-tighter text-bourbon-text">Beyond Maryland</h1>
+                <p class="text-lg md:text-xl text-bourbon-accent font-serif italic uppercase tracking-widest">Field Reports from Bourbon Country</p>
+                <div class="mt-6">
+                    <a href="index.html" class="text-[10px] font-bold uppercase tracking-widest text-bourbon-accent border-b border-bourbon-accent pb-0.5">← Home</a>
+                </div>
+            </div>
+        </header>
 
-  <div class="divider"><span class="divider-icon">🗺️</span></div>
+        <!-- Search and Filter -->
+        <div class="bg-white p-4 md:p-6 rounded-2xl border border-bourbon-border shadow-sm mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
+            <input type="text" id="search" placeholder="Search by name, state, or city..." class="w-full md:w-1/3 p-3 rounded-full border border-bourbon-border bg-bourbon-bg text-sm focus:outline-none focus:ring-2 focus:ring-bourbon-accent">
+            <div class="flex flex-wrap justify-center gap-2">
+                <button class="tag-filter-btn px-4 py-2 rounded-full border border-bourbon-border bg-bourbon-card text-[10px] font-bold uppercase tracking-widest transition-all" data-tag="Tours">Tours</button>
+                <button class="tag-filter-btn px-4 py-2 rounded-full border border-bourbon-border bg-bourbon-card text-[10px] font-bold uppercase tracking-widest transition-all" data-tag="Exclusive Bottles">Exclusives</button>
+                <button class="tag-filter-btn px-4 py-2 rounded-full border border-bourbon-border bg-bourbon-card text-[10px] font-bold uppercase tracking-widest transition-all" data-tag="Food">Food</button>
+                <button class="tag-filter-btn px-4 py-2 rounded-full border border-bourbon-border bg-bourbon-card text-[10px] font-bold uppercase tracking-widest transition-all" data-tag="Cocktails">Bar Program</button>
+            </div>
+        </div>
 
-  <div class="section-title">Retail Finds Outside Maryland</div>
-  <p class="section-sub">States with better allocation, better prices, or just better luck.</p>
-  <div class="prose">
-    <p>Virginia ABC stores punch above their weight for allocated bottles. Pennsylvania Fine Wine stores have inconsistent selection but occasionally surprising finds. Delaware has favorable pricing on everyday bottles. New Jersey Total Wine locations see better Buffalo Trace allocation than Maryland — worth the trip for a haul.</p>
-    <blockquote>"The best bourbon find of last year was in a small Virginia ABC 40 minutes from home. Go where the hunters aren't."</blockquote>
-  </div>
-</div>
-<div id="site-footer"></div>
-<script src="nav.js"></script>
+        <!-- Admin Tools -->
+        <div id="admin-tools" class="hidden mb-10 bg-white p-8 rounded-2xl border-2 border-dashed border-bourbon-accent shadow-lg">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-bold text-bourbon-accent uppercase tracking-widest">Add Scout Entry</h3>
+                <button id="seed-dist-btn" onclick="seedDistilleries()" class="hidden bg-green-600 text-white px-6 py-2 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-green-700">Load MBD Kentucky List</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="space-y-4">
+                    <input type="text" id="d-name" placeholder="Distillery Name" class="w-full p-3 border border-bourbon-border rounded-xl bg-bourbon-bg outline-none focus:ring-1 focus:ring-bourbon-accent">
+                    <input type="text" id="d-location" placeholder="City, State (e.g. Bardstown, KY)" class="w-full p-3 border border-bourbon-border rounded-xl bg-bourbon-bg outline-none focus:ring-1 focus:ring-bourbon-accent">
+                    <select id="d-verdict" class="w-full p-3 border border-bourbon-border rounded-xl bg-white outline-none">
+                        <option>Bourbon Mecca</option>
+                        <option>Plan Ahead</option>
+                        <option>Worth the Drive</option>
+                        <option>Hidden Gem</option>
+                        <option>Whiskey Row Stop</option>
+                        <option>While You're There</option>
+                        <option>Solid Stop</option>
+                        <option>On the List</option>
+                        <option>Avoid the Hype</option>
+                    </select>
+                </div>
+                <div class="space-y-4">
+                    <textarea id="d-desc" placeholder="MBD field notes..." class="w-full p-3 border border-bourbon-border rounded-xl bg-bourbon-bg outline-none focus:ring-1 focus:ring-bourbon-accent h-32"></textarea>
+                    <div class="flex flex-wrap gap-4 text-sm">
+                        <label class="flex items-center gap-2"><input type="checkbox" id="t-tours"> Tours</label>
+                        <label class="flex items-center gap-2"><input type="checkbox" id="t-food"> Food</label>
+                        <label class="flex items-center gap-2"><input type="checkbox" id="t-cocktails"> Bar</label>
+                        <label class="flex items-center gap-2"><input type="checkbox" id="t-gift"> Exclusive Bottles</label>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <button onclick="addDistillery()" class="bg-bourbon-accent text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-bourbon-text transition-all shadow-md">Log Visit</button>
+            </div>
+        </div>
+
+        <!-- Distillery Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16" id="distillery-grid">
+            <div class="col-span-full py-12 text-center text-gray-400 italic" id="loading-state">Loading distilleries...</div>
+        </div>
+
+        <!-- Trip Callout -->
+        <div class="bg-bourbon-text rounded-[2rem] p-8 md:p-12 text-white mb-16">
+            <div class="max-w-2xl mx-auto text-center space-y-4">
+                <h3 class="text-2xl md:text-3xl font-serif font-bold text-bourbon-accent">Planning a Kentucky Run?</h3>
+                <p class="text-gray-300 leading-relaxed">MBD's recommended two-trip strategy: <strong class="text-white">Trip 1 — Louisville Whiskey Row</strong> (Evan Williams, Angel's Envy, Old Forester, Peerless — all walkable in a day). <strong class="text-white">Trip 2 — Bourbon Country</strong> (Buffalo Trace, Woodford Reserve, Willett, Bardstown Bourbon Company, Jim Beam — two days minimum, base yourself in Bardstown).</p>
+                <p class="text-bourbon-accent text-sm font-bold uppercase tracking-widest">Never drink and drive. Designate a driver or book a tour service.</p>
+            </div>
+        </div>
+
+        <!-- Admin Footer -->
+        <div class="py-12 border-t border-bourbon-border text-center">
+            <div id="admin-login-ui">
+                <p class="text-[9px] font-bold text-gray-400 mb-4 uppercase tracking-[0.3em]">National Scout Authorization</p>
+                <div class="flex justify-center gap-2">
+                    <input type="password" id="admin-pin-input" placeholder="PIN" class="w-32 p-3 text-center border border-bourbon-border rounded-xl bg-transparent text-sm focus:outline-none focus:ring-1 focus:ring-bourbon-accent">
+                    <button onclick="checkPin()" class="text-[10px] bg-bourbon-card px-6 py-3 rounded-xl border border-bourbon-border font-bold uppercase tracking-widest hover:bg-white transition-colors shadow-sm">Unlock</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-bourbon-text text-white px-6 py-3 rounded-full shadow-2xl transition-opacity opacity-0 pointer-events-none text-sm font-bold z-50">Action Successful</div>
+
+    <script>
+        const API   = 'https://script.google.com/macros/s/AKfycbyAz0K3fcbxI-w17t9lBeMpimP4gNMhYP9_Bg2lYfmbA8CIjYxsE1tm3pTobbYWjW4q/exec';
+        const SHEET = 'Distilleries';
+        const ADMIN_PIN = '1924';
+
+        let distilleries = [], activeTags = [], isAdmin = false;
+
+        const seedData = [
+            { name: "Buffalo Trace Distillery", location: "Frankfort, KY", verdict: "Bourbon Mecca", desc: "America's most awarded distillery and home to Blanton's, Eagle Rare, Weller, EH Taylor, and Pappy. Tours are complimentary but reservations open 8 weeks out and disappear within hours. Set a calendar reminder.", tags: "Tours,Exclusive Bottles" },
+            { name: "Woodford Reserve Distillery", location: "Versailles, KY", verdict: "Worth the Drive", desc: "The most scenic distillery on the entire Kentucky Bourbon Trail. Historic limestone buildings, copper pot stills, and a campus that looks like it was designed for a magazine shoot. Bring your camera.", tags: "Tours,Exclusive Bottles,Food" },
+            { name: "Willett Distillery", location: "Bardstown, KY", verdict: "Hidden Gem", desc: "Family-owned and fiercely independent. Small groups, real access, and the kind of conversations with staff that make a visit memorable. Easier to book than most — don't overlook it because of that.", tags: "Tours,Exclusive Bottles" },
+            { name: "Bardstown Bourbon Company", location: "Bardstown, KY", verdict: "Worth the Drive", desc: "The modern face of Bardstown. Collaborative distillery with a stunning facility and one of the few full-service restaurants at a major Kentucky distillery. Plan to eat here and make an afternoon of it.", tags: "Tours,Food,Cocktails,Exclusive Bottles" },
+            { name: "James B. Beam Distilling Co.", location: "Clermont, KY", verdict: "Worth the Drive", desc: "The biggest campus on the trail. Home to Jim Beam, Knob Creek, Booker's, Basil Hayden, and Baker's. Do the Knob Creek bottling experience if available. The Kitchen Table restaurant is open Wed through Sun.", tags: "Tours,Food,Exclusive Bottles" },
+            { name: "Evan Williams Bourbon Experience", location: "Louisville, KY", verdict: "Whiskey Row Stop", desc: "Heaven Hill's urban distillery right on Louisville's Whiskey Row. Perfect anchor for a full day on the Row — walkable to Angel's Envy, Old Forester, and Peerless. Interactive and polished.", tags: "Tours,Cocktails" },
+            { name: "Angel's Envy Distillery", location: "Louisville, KY", verdict: "Whiskey Row Stop", desc: "The best-looking urban distillery on Whiskey Row. Dramatic open distillery floor and an impressive port barrel finishing room. The Triple Oak expression is worth tracking down while you're here.", tags: "Tours,Cocktails,Exclusive Bottles" },
+            { name: "Old Forester Distilling Co.", location: "Louisville, KY", verdict: "Whiskey Row Stop", desc: "America's first bottled bourbon, back home on Whiskey Row where it started in 1870. Best history lesson on the Row and a fully working distillery you can watch in action. Ask about Birthday Bourbon single barrel picks.", tags: "Tours,Exclusive Bottles,Cocktails" },
+            { name: "Kentucky Peerless Distilling Co.", location: "Louisville, KY", verdict: "Whiskey Row Stop", desc: "Where serious bourbon hunters go. Small batch, high proof, no chill filtration. The Taylor family revived a Prohibition-era license to build this from scratch. Their rye is a revelation — possibly the best craft rye in Kentucky.", tags: "Tours,Exclusive Bottles" }
+        ];
+
+        const verdictColors = {
+            'Bourbon Mecca'    : 'bg-bourbon-accent text-white',
+            'Plan Ahead'       : 'bg-purple-700 text-white',
+            'Worth the Drive'  : 'bg-bourbon-text text-white',
+            'Hidden Gem'       : 'bg-green-700 text-white',
+            'Whiskey Row Stop' : 'bg-amber-600 text-white',
+            "While You're There" : 'bg-teal-600 text-white',
+            'Solid Stop'       : 'bg-gray-500 text-white',
+            'On the List'      : 'bg-blue-600 text-white',
+            'Avoid the Hype'   : 'bg-red-600 text-white'
+        };
+
+        const showToast = (msg) => {
+            const t = document.getElementById('toast');
+            t.innerText = msg; t.classList.remove('opacity-0');
+            setTimeout(() => t.classList.add('opacity-0'), 3000);
+        };
+
+        const apiFetch = () => new Promise((resolve, reject) => {
+            const cb = 'mbd_cb_' + Date.now();
+            const script = document.createElement('script');
+            window[cb] = (data) => { delete window[cb]; script.remove(); resolve(Array.isArray(data) ? data : []); };
+            script.onerror = () => { delete window[cb]; script.remove(); reject(new Error('JSONP failed')); };
+            script.src = API + '?sheet=' + SHEET + '&callback=' + cb;
+            document.head.appendChild(script);
+        });
+
+        const apiPost = async (payload) => {
+            payload.sheet = SHEET;
+            const res = await fetch(API, { method: 'POST', body: JSON.stringify(payload) });
+            return res.json();
+        };
+
+        const loadDistilleries = async () => {
+            try {
+                distilleries = await apiFetch();
+                renderDistilleries();
+                document.getElementById('loading-state').style.display = 'none';
+            } catch(e) {
+                document.getElementById('loading-state').innerHTML = '<span class="text-red-400 font-bold text-sm">Could not load data. Check Apps Script deployment.</span>';
+            }
+        };
+
+        const renderDistilleries = () => {
+            const grid = document.getElementById('distillery-grid');
+            const search = document.getElementById('search').value.toLowerCase();
+            const filtered = distilleries.filter(d => {
+                const matchesSearch = (d.name||'').toLowerCase().includes(search) || (d.location||'').toLowerCase().includes(search);
+                const tags = d.tags ? d.tags.split(',').map(t => t.trim()) : [];
+                const matchesTags = activeTags.length === 0 || activeTags.every(tag => tags.includes(tag));
+                return matchesSearch && matchesTags;
+            }).sort((a, b) => (a.location||'').localeCompare(b.location||''));
+
+            if (filtered.length === 0) { grid.innerHTML = '<div class="col-span-full py-12 text-center text-gray-400 italic">No distilleries found.</div>'; return; }
+
+            grid.innerHTML = filtered.map(d => {
+                const tags = d.tags ? d.tags.split(',').map(t => t.trim()) : [];
+                const vc = verdictColors[d.verdict] || 'bg-bourbon-card text-bourbon-text';
+                const adminBtn = isAdmin ? `<button onclick="removeDistillery(${d.rowIndex})" class="mt-4 text-[10px] text-red-400 hover:text-red-600 uppercase font-bold tracking-widest">Delete Entry</button>` : '';
+                return `<div class="bg-white p-6 rounded-2xl border border-bourbon-border shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-4 gap-2">
+                            <span class="text-xs font-bold uppercase tracking-widest text-bourbon-accent">${d.location||''}</span>
+                            <span class="shrink-0 px-3 py-1 rounded-full text-[10px] font-bold uppercase ${vc}">${d.verdict||''}</span>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold mb-3 text-bourbon-text">${d.name||''}</h3>
+                        <p class="text-sm text-gray-600 leading-relaxed">${d.desc||''}</p>
+                    </div>
+                    <div>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            ${tags.map(t => `<span class="text-[9px] bg-bourbon-bg px-2 py-0.5 rounded border border-bourbon-border uppercase font-bold text-gray-500">${t}</span>`).join('')}
+                        </div>
+                        ${adminBtn}
+                    </div>
+                </div>`;
+            }).join('');
+        };
+
+        window.addDistillery = async () => {
+            const name = document.getElementById('d-name').value.trim();
+            const location = document.getElementById('d-location').value.trim();
+            const verdict = document.getElementById('d-verdict').value;
+            const desc = document.getElementById('d-desc').value.trim();
+            const tags = [
+                document.getElementById('t-tours').checked ? 'Tours' : null,
+                document.getElementById('t-food').checked ? 'Food' : null,
+                document.getElementById('t-cocktails').checked ? 'Cocktails' : null,
+                document.getElementById('t-gift').checked ? 'Exclusive Bottles' : null,
+            ].filter(Boolean).join(',');
+            if (!name || !location) return showToast('Name and Location are required.');
+            await apiPost({ action: 'add', name, location, verdict, desc, tags });
+            document.getElementById('d-name').value = '';
+            document.getElementById('d-location').value = '';
+            document.getElementById('d-desc').value = '';
+            showToast('Distillery added!');
+            await loadDistilleries();
+        };
+
+        window.removeDistillery = async (rowIndex) => {
+            if (!confirm('Remove this distillery?')) return;
+            await apiPost({ action: 'delete', rowIndex });
+            showToast('Entry removed.');
+            await loadDistilleries();
+        };
+
+        window.seedDistilleries = async () => {
+            const btn = document.getElementById('seed-dist-btn');
+            btn.disabled = true; btn.innerText = 'Loading...';
+            await apiPost({ action: 'seed', data: seedData });
+            showToast('MBD Kentucky list loaded!');
+            btn.classList.add('hidden');
+            await loadDistilleries();
+        };
+
+        window.checkPin = () => {
+            const input = document.getElementById('admin-pin-input');
+            if (input.value.trim() === ADMIN_PIN) {
+                isAdmin = true;
+                document.getElementById('admin-login-ui').classList.add('hidden');
+                document.getElementById('admin-tools').classList.remove('hidden');
+                if (distilleries.length === 0) document.getElementById('seed-dist-btn').classList.remove('hidden');
+                renderDistilleries();
+                showToast('National Scout Tools Unlocked');
+            } else { showToast('Incorrect PIN'); input.value = ''; }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDistilleries();
+            document.getElementById('search').oninput = renderDistilleries;
+            document.getElementById('admin-pin-input').addEventListener('keypress', e => { if (e.key === 'Enter') checkPin(); });
+            document.querySelectorAll('.tag-filter-btn').forEach(btn => {
+                btn.onclick = () => {
+                    const tag = btn.dataset.tag;
+                    if (activeTags.includes(tag)) {
+                        activeTags = activeTags.filter(t => t !== tag);
+                        btn.classList.remove('bg-bourbon-accent', 'text-white');
+                        btn.classList.add('bg-bourbon-card');
+                    } else {
+                        activeTags.push(tag);
+                        btn.classList.add('bg-bourbon-accent', 'text-white');
+                        btn.classList.remove('bg-bourbon-card');
+                    }
+                    renderDistilleries();
+                };
+            });
+        });
+    </script>
+
 </body>
 </html>

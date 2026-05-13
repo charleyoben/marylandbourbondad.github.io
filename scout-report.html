@@ -1,80 +1,429 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The MBD Scout Report | Maryland Bourbon Dad</title>
-<link rel="stylesheet" href="style.css">
-<style>
-.scout-header { background: var(--brown); color: var(--cream); padding: 8px 16px; font-family: 'Cinzel', serif; font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; }
-.intel-card { background: var(--white); border: 1px solid var(--parch); border-left: 4px solid var(--amber); padding: 28px 28px 24px; margin-bottom: 20px; }
-.intel-card .tag { font-family: 'Cinzel', serif; font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
-.intel-card h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--brown); margin-bottom: 10px; line-height: 1.3; }
-.intel-card p { font-size: .92rem; color: var(--text); margin-bottom: 10px; }
-.intel-card .verdict { font-family: 'Cinzel', serif; font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); border-top: 1px solid var(--parch); padding-top: 12px; margin-top: 12px; }
-.intel-card .verdict span { color: var(--amber); }
-.rankings-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
-.rankings-table th { font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); background: var(--brown); padding: 10px 14px; text-align: left; }
-.rankings-table td { padding: 12px 14px; border-bottom: 1px solid var(--parch); font-size: .9rem; }
-.rankings-table tr:nth-child(even) td { background: var(--cream); }
-.rank-num { font-family: 'Cinzel', serif; font-weight: 700; color: var(--amber); }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The MBD Scout Report | Maryland Bourbon Dad</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bourbon: {
+                            bg: '#F9F6F0',
+                            text: '#2D231E',
+                            accent: '#C46210',
+                            accentHover: '#A04D0D',
+                            card: '#EBE3D5',
+                            border: '#D4C5B0'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+                        serif: ['Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #F9F6F0; color: #2D231E; }
+        .chart-container { position: relative; width: 100%; max-width: 900px; margin: 0 auto; height: 400px; max-height: 50vh; }
+        @media (max-width: 768px) { .chart-container { height: 300px; } }
+        .tab-active { background-color: #C46210; color: #ffffff; border-color: #C46210; }
+        .tab-inactive { background-color: #EBE3D5; color: #2D231E; border-color: #D4C5B0; }
+        .tab-content { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .section-divider { border: none; height: 2px; background: linear-gradient(to right, transparent, #D4C5B0, transparent); }
+        .release-badge { display: inline-block; background-color: #C46210; color: white; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 10px; border-radius: 999px; }
+        .note-card { border-left: 3px solid #C46210; background-color: #fff; padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; }
+        .stat-pill { background-color: #EBE3D5; border: 1px solid #D4C5B0; border-radius: 999px; padding: 4px 14px; font-size: 0.85rem; font-weight: 600; display: inline-block; }
+        .ranking-row:not(:last-child) { border-bottom: 1px solid #EBE3D5; }
+        .mbd-take { background: linear-gradient(135deg, #2D231E 0%, #3D322A 100%); color: #F9F6F0; border-radius: 10px; padding: 1rem 1.25rem; }
+        .mbd-take strong { color: #C46210; }
+    </style>
 </head>
-<body>
-<div id="site-nav"></div>
-<div class="page-banner">
-  <div class="eyebrow">Intelligence Briefing</div>
-  <h1>The MBD Scout Report</h1>
-  <p>New releases, updated rankings, local Maryland intel, and the bottles worth your money right now. No hype. No unicorn chasing.</p>
-</div>
-<div class="content-wrap">
-  <div class="scout-header">Latest Intel — May 2026</div>
+<body class="antialiased">
 
-  <div style="margin-top: 24px;">
-    <div class="intel-card">
-      <div class="tag">🔥 New Release Alert</div>
-      <h3>Peerless Kentucky Straight Bourbon 10 Year</h3>
-      <p>Peerless dropped a 10-year expression and it's legitimately worth paying attention to. At cask strength from their sweet mash process, this is a departure from the lighter younger releases that put them on the map. Rich oak, baking spice, and a vanilla sweetness that doesn't feel manufactured.</p>
-      <p>The sweet mash process gives Peerless a distinctive grain-forward base that takes on a different character at 10 years — less bright fruit, more resolved complexity. Approachable for cask strength, which is a plus.</p>
-      <div class="verdict">MBD Verdict: <span>Buy if you find it at MSRP. Don't overpay.</span></div>
-    </div>
+    <!-- NAV -->
+    <nav class="sticky top-0 z-50 bg-bourbon-bg/90 backdrop-blur-md border-b border-bourbon-border shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="index.html" class="flex-shrink-0 flex items-center gap-2">
+                    <span class="text-2xl">🥃</span>
+                    <span class="font-serif font-bold text-xl tracking-tight text-bourbon-accent">Maryland Bourbon Dad</span>
+                </a>
+                <div class="hidden md:flex space-x-5 text-sm font-medium">
+                    <a href="#release-alert" class="hover:text-bourbon-accent transition-colors">Release Alert</a>
+                    <a href="#rankings" class="hover:text-bourbon-accent transition-colors">2026 Rankings</a>
+                    <a href="#sagamore" class="hover:text-bourbon-accent transition-colors">Sagamore</a>
+                    <a href="#big-game" class="hover:text-bourbon-accent transition-colors">Big Game</a>
+                    <a href="#market-intel" class="hover:text-bourbon-accent transition-colors">DMV Intel</a>
+                </div>
+                <a href="index.html" class="text-xs font-bold uppercase tracking-widest text-bourbon-accent border border-bourbon-accent px-3 py-1 rounded-full hover:bg-bourbon-accent hover:text-white transition-colors">← Home</a>
+            </div>
+        </div>
+    </nav>
 
-    <div class="intel-card">
-      <div class="tag">📍 Maryland Local Spotlight</div>
-      <h3>Sagamore Spirit — What's Worth Buying Right Now</h3>
-      <p>Sagamore continues to be the most accessible quality Maryland bourbon. Their rye-heavy mash bill and Port Covington water story aren't just marketing — you taste the mineral quality in the finish. The Double Oak is the pick of the current lineup if you can find it.</p>
-      <div class="verdict">MBD Verdict: <span>Double Oak is the move. Straight Rye is the everyday sipper.</span></div>
-    </div>
+    <!-- HEADER -->
+    <header class="py-16 md:py-20 px-4 text-center border-b border-bourbon-border bg-gradient-to-b from-bourbon-card to-bourbon-bg">
+        <div class="max-w-4xl mx-auto">
+            <p class="text-sm font-semibold uppercase tracking-widest text-bourbon-accent mb-3">May 2026 Edition</p>
+            <h1 class="text-4xl md:text-6xl font-serif font-bold mb-4 tracking-tight">The MBD Scout Report</h1>
+            <p class="text-xl md:text-2xl italic text-bourbon-accent mb-6 font-serif">"Seek. Sip. Savor the Moment."</p>
+            <p class="text-lg max-w-2xl mx-auto leading-relaxed text-bourbon-text/80">
+                New releases, updated rankings, local Maryland intel, and the bottles worth your money right now. No hype. No unicorn chasing. Just honest intel from a dad who drinks bourbon.
+            </p>
+        </div>
+    </header>
 
-    <div class="intel-card">
-      <div class="tag">💰 Value Picks — Right Now</div>
-      <h3>Three Bottles Worth Buying This Month</h3>
-      <p><strong>Elijah Craig Small Batch</strong> — Reliable, complex, $30. The benchmark for this price tier. Stop overthinking it.</p>
-      <p><strong>Knob Creek 9 Year</strong> — Back to form with the 9-year age statement. Bold, oaky, 100 proof. Great for cocktails and sipping.</p>
-      <p><strong>Wild Turkey 101</strong> — Jimmy Russell's house. High rye, high proof, honest price. Sleeper pick that never disappoints.</p>
-    </div>
-  </div>
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
 
-  <div class="divider"><span class="divider-icon">📊</span></div>
+        <!-- SECTION 1: PEERLESS RELEASE ALERT -->
+        <section id="release-alert" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="text-3xl">🚨</span>
+                <div>
+                    <span class="release-badge">Release Alert</span>
+                    <h2 class="text-3xl font-serif font-bold mt-1">Peerless Finally Did It: The 10-Year Kraver's Old Reserve</h2>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 space-y-5">
+                    <p class="text-lg leading-relaxed">If you've been following Peerless since their resurrection, you knew this day was coming. Kentucky Peerless Distilling Co. released its first-ever 10-year-old whiskey — <strong>Henry Kraver's Old Reserve Bourbon</strong> — on April 22, 2026, at the Louisville distillery, with a one-bottle-per-person limit.</p>
+                    <p class="text-lg leading-relaxed">Every bottle in Batch 1 represents liquid aging since the very beginning of the 2013 revival — making this not just the distillery's first age-stated bourbon, but a full decade of discipline in a glass. Sweet mash. No sourcing. Barrel proof. No chill filtering. Everything they promised, delivered.</p>
+                    <div class="note-card">
+                        <p class="text-sm font-bold uppercase tracking-wider text-bourbon-accent mb-3">Batch 1 Tasting Notes · 117.6 Proof (58.8% ABV)</p>
+                        <div class="space-y-2 text-base">
+                            <p><strong>Nose:</strong> Pipe tobacco, candied peanuts, almond extract, French vanilla ice cream, port wine</p>
+                            <p><strong>Palate:</strong> Candied orange peel, jammy pear/apple/cranberry, clove spice, graham cracker, marshmallow texture</p>
+                            <p><strong>Finish:</strong> Tobacco barn, charred applewood, vintage funk — rustic and long</p>
+                        </div>
+                    </div>
+                    <div class="mbd-take">
+                        <p class="text-sm font-bold uppercase tracking-wider mb-2"><strong>MBD Take</strong></p>
+                        <p class="leading-relaxed">This is exactly the kind of release that rewards patience — both the distillery's and yours. If you believe in the sweet mash, no-sourcing, barrel proof philosophy, this bottle is the proof of concept. Batch 1 is gone. <strong>Plan for Louisville on April 22, 2027.</strong> Set the calendar reminder now.</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-white rounded-xl border border-bourbon-border p-5 shadow-sm">
+                        <h3 class="font-bold text-base uppercase tracking-wider text-bourbon-accent mb-4">Quick Stats</h3>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between items-center py-2 border-b border-bourbon-border"><span class="text-bourbon-text/70">Age</span><span class="font-bold">10 Years</span></div>
+                            <div class="flex justify-between items-center py-2 border-b border-bourbon-border"><span class="text-bourbon-text/70">Proof</span><span class="font-bold">117.6 (Barrel Proof)</span></div>
+                            <div class="flex justify-between items-center py-2 border-b border-bourbon-border"><span class="text-bourbon-text/70">Mash Process</span><span class="font-bold">Sweet Mash</span></div>
+                            <div class="flex justify-between items-center py-2 border-b border-bourbon-border"><span class="text-bourbon-text/70">Sourced?</span><span class="font-bold text-green-700">Never</span></div>
+                            <div class="flex justify-between items-center py-2 border-b border-bourbon-border"><span class="text-bourbon-text/70">Chill Filtered?</span><span class="font-bold text-green-700">No</span></div>
+                            <div class="flex justify-between items-center py-2 border-b border-bourbon-border"><span class="text-bourbon-text/70">MSRP</span><span class="font-bold">TBA</span></div>
+                            <div class="flex justify-between items-center py-2"><span class="text-bourbon-text/70">Next Release</span><span class="font-bold">April 22, 2027</span></div>
+                        </div>
+                    </div>
+                    <div class="bg-bourbon-card rounded-xl border border-bourbon-border p-5">
+                        <p class="text-sm font-bold uppercase tracking-wider text-bourbon-accent mb-2">Why It Matters</p>
+                        <p class="text-sm leading-relaxed">In 2024, the IWSC named Peerless <strong>World's Best Bourbon</strong>. This is the release they've been building toward since day one.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <div class="section-title">MBD Current Rankings</div>
-  <p class="section-sub">Updated May 2026 — bottles I've tasted in the last 12 months, ranked by overall score.</p>
-  <table class="rankings-table">
-    <thead>
-      <tr><th>#</th><th>Bottle</th><th>Category</th><th>MBD Score</th></tr>
-    </thead>
-    <tbody>
-      <tr><td class="rank-num">1</td><td>Booker's 2025-02</td><td>Cask Strength</td><td>94</td></tr>
-      <tr><td class="rank-num">2</td><td>Angel's Envy Triple Oak</td><td>Finished</td><td>92</td></tr>
-      <tr><td class="rank-num">3</td><td>Widow Jane Decadence</td><td>Specialty</td><td>91</td></tr>
-      <tr><td class="rank-num">4</td><td>Elijah Craig Barrel Proof (A124)</td><td>Cask Strength</td><td>90</td></tr>
-      <tr><td class="rank-num">5</td><td>Four Roses Single Barrel</td><td>Single Barrel</td><td>89</td></tr>
-      <tr><td class="rank-num">6</td><td>Sagamore Spirit Double Oak</td><td>Maryland</td><td>87</td></tr>
-      <tr><td class="rank-num">7</td><td>Knob Creek 9 Year</td><td>Everyday</td><td>86</td></tr>
-      <tr><td class="rank-num">8</td><td>Elijah Craig Small Batch</td><td>Everyday</td><td>85</td></tr>
-    </tbody>
-  </table>
-</div>
-<div id="site-footer"></div>
-<script src="nav.js"></script>
+        <hr class="section-divider" />
+
+        <!-- SECTION 2: PEERLESS DEEP DIVE -->
+        <section id="peerless-deepdive" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="text-3xl">🔬</span>
+                <div>
+                    <span class="release-badge" style="background-color:#2D231E;">Deep Dive</span>
+                    <h2 class="text-3xl font-serif font-bold mt-1">Why Peerless Is Different: The Sweet Mash Advantage</h2>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white rounded-xl border border-bourbon-border p-6 shadow-sm">
+                    <div class="text-3xl mb-3">🌾</div>
+                    <h3 class="font-bold text-lg mb-2">Sweet Mash Only</h3>
+                    <p class="text-base leading-relaxed">Most distilleries use sour mash — recycling backset from previous fermentation for consistency. Peerless starts completely fresh every single batch. The result is a cleaner, brighter distillate where grain and barrel character develop without interference from the prior run.</p>
+                </div>
+                <div class="bg-white rounded-xl border border-bourbon-border p-6 shadow-sm">
+                    <div class="text-3xl mb-3">🚫</div>
+                    <h3 class="font-bold text-lg mb-2">Never Sourced</h3>
+                    <p class="text-base leading-relaxed">Grain to bottle, in-house, full stop. They operate under the same distilled spirits number — DSP-KY-50 — as the original 1889 distillery. That's not marketing. That's a production philosophy they've refused to compromise on since Day 1.</p>
+                </div>
+                <div class="bg-white rounded-xl border border-bourbon-border p-6 shadow-sm">
+                    <div class="text-3xl mb-3">💧</div>
+                    <h3 class="font-bold text-lg mb-2">Barrel Proof, Untouched</h3>
+                    <p class="text-base leading-relaxed">No dilution. No chill filtering. Every bottle is what the barrel says it is. At 10 years, that discipline stops being a promise and starts being visible in the glass. What you taste is purely what the wood and time created.</p>
+                </div>
+            </div>
+            <div class="mbd-take">
+                <p class="text-sm font-bold uppercase tracking-wider mb-2"><strong>MBD Take</strong></p>
+                <p class="leading-relaxed">I've poured Peerless for people who've never heard of it and watched them do a double take. It doesn't drink like a craft whiskey. It drinks like a distillery that has been obsessing over one thing for a decade. Because it has. The 10-Year is the culmination. If you can find it, buy it without hesitation.</p>
+            </div>
+        </section>
+
+        <hr class="section-divider" />
+
+        <!-- SECTION 3: 2026 RANKINGS -->
+        <section id="rankings" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="text-3xl">🏆</span>
+                <div>
+                    <span class="release-badge" style="background-color:#7A5C3A;">Rankings</span>
+                    <h2 class="text-3xl font-serif font-bold mt-1">2026 Bourbon Rankings: What the Critics Are Saying</h2>
+                </div>
+            </div>
+            <p class="text-lg leading-relaxed mb-8">We're nearly halfway through 2026 and several credible outlets have published their rankings. Here's the honest summary — what matters, who said it, and what you should actually do about it.</p>
+            <div class="space-y-4">
+                <div class="ranking-row pb-4">
+                    <div class="flex flex-col md:flex-row md:items-start gap-3">
+                        <div class="md:w-48 flex-shrink-0"><p class="text-xs font-bold uppercase tracking-wider text-bourbon-accent">Men's Journal 2026</p><p class="text-xs text-bourbon-text/60">Best of Awards</p></div>
+                        <div class="flex-1"><p class="text-base leading-relaxed">Michter's 10 Year Old claimed Best Overall. Colonel E.H. Taylor Jr. Small Batch took Best Bottled-in-Bond. Evan Williams Bottled-in-Bond held Best Value — still under $20 and capable of anything from neat to an Old Fashioned without embarrassing itself.</p></div>
+                    </div>
+                </div>
+                <div class="ranking-row py-4">
+                    <div class="flex flex-col md:flex-row md:items-start gap-3">
+                        <div class="md:w-48 flex-shrink-0"><p class="text-xs font-bold uppercase tracking-wider text-bourbon-accent">VinePair Top 30</p><p class="text-xs text-bourbon-text/60">2026 Edition</p></div>
+                        <div class="flex-1"><p class="text-base leading-relaxed">Russell's Reserve 13 Year Old sits at the top — a yearly limited release they call "as good as bourbon gets," with rich caramel, vanilla, hints of dried fruit and s'mores. Worth hunting every spring when it drops.</p></div>
+                    </div>
+                </div>
+                <div class="ranking-row py-4">
+                    <div class="flex flex-col md:flex-row md:items-start gap-3">
+                        <div class="md:w-48 flex-shrink-0"><p class="text-xs font-bold uppercase tracking-wider text-bourbon-accent">Boozemakers</p><p class="text-xs text-bourbon-text/60">87 Bourbons, Blind</p></div>
+                        <div class="flex-1"><p class="text-base leading-relaxed">After 87 bourbons across four blind tasting sessions over eight weeks, Wild Turkey Rare Breed held the top spot for a third straight year. Russell's Reserve 10 Year was flagged as "criminally overlooked." Hard to argue with either call.</p></div>
+                    </div>
+                </div>
+                <div class="ranking-row py-4">
+                    <div class="flex flex-col md:flex-row md:items-start gap-3">
+                        <div class="md:w-48 flex-shrink-0"><p class="text-xs font-bold uppercase tracking-wider text-bourbon-accent">The Daily Pour</p><p class="text-xs text-bourbon-text/60">2026 YTD</p></div>
+                        <div class="flex-1"><p class="text-base leading-relaxed">Bardstown Bourbon Co.'s Distillery Reserve series continues to show up strong. King of Kentucky's first-ever batched expression also made waves — Brown-Forman dropped three batches simultaneously in February, which is worth tracking.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mbd-take mt-6">
+                <p class="text-sm font-bold uppercase tracking-wider mb-2"><strong>MBD Take</strong></p>
+                <p class="leading-relaxed">The consensus in 2026 isn't "find the rarest bottle." It's "buy the honest ones." Russell's Reserve 10 Year at ~$50, Evan Williams BiB at under $20 — these keep showing up because they keep delivering. That's the whole MBD philosophy right there. Stop chasing. Start drinking well.</p>
+            </div>
+        </section>
+
+        <hr class="section-divider" />
+
+        <!-- SECTION 4: SAGAMORE SPOTLIGHT -->
+        <section id="sagamore" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="text-3xl">🦀</span>
+                <div>
+                    <span class="release-badge" style="background-color:#1A5276;">Maryland Local</span>
+                    <h2 class="text-3xl font-serif font-bold mt-1">Your Own Backyard: Sagamore Spirit Is Having a Year</h2>
+                </div>
+            </div>
+            <p class="text-lg leading-relaxed mb-8">If you're in Maryland and you're sleeping on Sagamore, it's time to wake up. In the last eight months, your local Baltimore distillery has released its oldest whiskey ever and crossed into bourbon territory for the first time. Both are worth knowing about.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="bg-white rounded-xl border border-bourbon-border shadow-sm overflow-hidden">
+                    <div class="bg-bourbon-text p-4">
+                        <p class="text-xs font-bold uppercase tracking-wider text-bourbon-accent mb-1">September 2025 · Reserve Series</p>
+                        <h3 class="text-xl font-serif font-bold text-white">10-Year-Old Straight Rye</h3>
+                        <p class="text-sm text-white/60 mt-1">Their oldest release ever</p>
+                    </div>
+                    <div class="p-5 space-y-4">
+                        <div class="flex gap-3 flex-wrap"><span class="stat-pill">10 Years</span><span class="stat-pill">110.8 Proof</span><span class="stat-pill">$79.99 MSRP</span></div>
+                        <p class="text-base leading-relaxed">Aged in new charred American white oak, available at the distillery and select retailers nationwide. Notes of peach crumble, roasted nuts, and molasses cookie. A major milestone — the oldest straight rye Sagamore has ever put out.</p>
+                        <p class="text-sm font-semibold text-bourbon-accent">→ The one I'd be hunting.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl border border-bourbon-border shadow-sm overflow-hidden">
+                    <div class="bg-[#7A5C3A] p-4">
+                        <p class="text-xs font-bold uppercase tracking-wider text-bourbon-card mb-1">October 2025 · Reserve Series</p>
+                        <h3 class="text-xl font-serif font-bold text-white">High Rye Straight Bourbon</h3>
+                        <p class="text-sm text-white/60 mt-1">Their first bourbon — ever</p>
+                    </div>
+                    <div class="p-5 space-y-4">
+                        <div class="flex gap-3 flex-wrap"><span class="stat-pill">6 Years</span><span class="stat-pill">118 Proof</span><span class="stat-pill">$49 MSRP</span></div>
+                        <p class="text-base leading-relaxed">60% corn, 25% rye, 15% malted rye. Available at the Baltimore distillery and select Maryland retailers. Caramel, turbinado sugar, orchard fruit, cinnamon, and a rye spice finish. Breaking Bourbon called it "well-rounded and full of flavor" for a 6-year-old.</p>
+                        <p class="text-sm font-semibold text-bourbon-accent">→ The everyday Tuesday bottle.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mbd-take">
+                <p class="text-sm font-bold uppercase tracking-wider mb-2"><strong>MBD Take</strong></p>
+                <p class="leading-relaxed">As a Maryland bourbon dad, I'm proud to have a distillery this good in our backyard. The 10-Year Rye is the bottle worth tracking down. The High Rye Bourbon is worth picking up on a regular Tuesday without any hand-wringing. Both deserve a spot on your shelf, and neither requires you to leave the state to find them.</p>
+            </div>
+        </section>
+
+        <hr class="section-divider" />
+
+        <!-- SECTION 5: THREE BOTTLES TO BUY NOW -->
+        <section id="buy-now" class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="text-3xl">🛒</span>
+                <div>
+                    <span class="release-badge" style="background-color:#1E8449;">Buy This</span>
+                    <h2 class="text-3xl font-serif font-bold mt-1">Three Bottles Worth Finding Right Now</h2>
+                </div>
+            </div>
+            <p class="text-lg leading-relaxed mb-8">No hype. No lottery entries. No secondary market. Here's what I'd actually tell a buddy standing at the liquor store counter this week.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white rounded-xl border border-bourbon-border shadow-sm p-6 flex flex-col">
+                    <div class="text-4xl font-serif font-black text-bourbon-accent mb-1">01</div>
+                    <h3 class="text-xl font-bold mb-1">Russell's Reserve 10 Year</h3>
+                    <p class="stat-pill mb-4 self-start">~$50</p>
+                    <p class="text-base leading-relaxed flex-1">Shows up on best-of lists because it keeps delivering. Multiple blind tastings have it consistently outperforming bottles twice its price. If there's one bottle that proves you don't need to spend crazy money for a great pour, this is it.</p>
+                    <p class="text-sm font-semibold text-bourbon-accent mt-4">Best for: Neat sipping, gifting</p>
+                </div>
+                <div class="bg-white rounded-xl border border-bourbon-border shadow-sm p-6 flex flex-col">
+                    <div class="text-4xl font-serif font-black text-bourbon-accent mb-1">02</div>
+                    <h3 class="text-xl font-bold mb-1">Sagamore High Rye Bourbon</h3>
+                    <p class="stat-pill mb-4 self-start">~$49 · Maryland Only</p>
+                    <p class="text-base leading-relaxed flex-1">Maryland-made, solid proof, approachable price, and a flavor that splits the difference between bourbon and rye. The fact that it's local makes it even easier to recommend. Pick it up at the Baltimore distillery or a select MD retailer.</p>
+                    <p class="text-sm font-semibold text-bourbon-accent mt-4">Best for: Local pride, weeknight pours</p>
+                </div>
+                <div class="bg-white rounded-xl border border-bourbon-border shadow-sm p-6 flex flex-col">
+                    <div class="text-4xl font-serif font-black text-bourbon-accent mb-1">03</div>
+                    <h3 class="text-xl font-bold mb-1">Evan Williams Bottled-in-Bond</h3>
+                    <p class="stat-pill mb-4 self-start">~$18</p>
+                    <p class="text-base leading-relaxed flex-1">100 proof. Caramel, vanilla, citrus, black pepper, long warm finish. The most honest $18 you'll spend in a liquor store, full stop. Keep two on the shelf and you're always ready to host without thinking twice about it.</p>
+                    <p class="text-sm font-semibold text-bourbon-accent mt-4">Best for: Cocktails, hosting, stocking up</p>
+                </div>
+            </div>
+            <div class="mbd-take">
+                <p class="text-sm font-bold uppercase tracking-wider mb-2"><strong>MBD Take</strong></p>
+                <p class="leading-relaxed">The bourbon game right now rewards the people who know what they're looking at on the shelf. These three don't require luck, a lottery, or the secondary market. They just require showing up — and knowing they're worth it before you pick them up. Now you know.</p>
+            </div>
+        </section>
+
+        <hr class="section-divider" />
+
+        <!-- SECTION 6: BIG GAME CHART -->
+        <section id="big-game" class="scroll-mt-24">
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="text-3xl">🎯</span>
+                    <div>
+                        <span class="release-badge" style="background-color:#6C3483;">Allocated Targets</span>
+                        <h2 class="text-3xl font-serif font-bold mt-1">The 2026 "Big Game" Price Tracker</h2>
+                    </div>
+                </div>
+                <p class="text-lg leading-relaxed mt-3">Tracking the highest-chatter allocated releases nationally and in the DMV. The chart compares target MSRP against the "Grab It" fair secondary value. <strong>Click any bar</strong> to see why that bottle is dominating the conversation.</p>
+            </div>
+            <div class="bg-white p-4 md:p-6 rounded-xl border border-bourbon-border shadow-sm">
+                <div class="chart-container"><canvas id="priceChart"></canvas></div>
+                <div id="chart-details" class="mt-6 p-4 bg-bourbon-card rounded-lg border border-bourbon-border min-h-[80px] flex items-center justify-center text-center transition-all">
+                    <p class="text-bourbon-text/70 italic">Click a bar above to see the 2026 trend profile for that bottle.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7: DMV MARKET INTEL -->
+        <section id="market-intel" class="scroll-mt-24">
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="text-3xl">🦀</span>
+                    <div>
+                        <span class="release-badge" style="background-color:#1A5276;">DMV Strategy</span>
+                        <h2 class="text-3xl font-serif font-bold mt-1">The Maryland Scout: DMV Market Intel</h2>
+                    </div>
+                </div>
+                <p class="text-lg leading-relaxed mt-3">National trends don't always apply to our local corridor. Hunting in Maryland, DC, and Virginia requires a tactical approach.</p>
+            </div>
+            <div class="flex flex-col md:flex-row gap-4 md:gap-8">
+                <div class="md:w-1/3 flex flex-col gap-2">
+                    <button class="tab-btn tab-active px-4 py-3 rounded-lg text-left font-semibold border transition-colors focus:outline-none" data-target="tab-lottery">Lottery vs. Drop Strategy</button>
+                    <button class="tab-btn tab-inactive px-4 py-3 rounded-lg text-left font-semibold border transition-colors focus:outline-none" data-target="tab-divergence">The DMV Divergence</button>
+                    <button class="tab-btn tab-inactive px-4 py-3 rounded-lg text-left font-semibold border transition-colors focus:outline-none" data-target="tab-storepick">Store Pick Renaissance</button>
+                </div>
+                <div class="md:w-2/3 bg-white p-6 rounded-xl border border-bourbon-border shadow-sm min-h-[250px]">
+                    <div id="tab-lottery" class="tab-content active">
+                        <h3 class="text-xl font-bold text-bourbon-accent mb-4">Mastering the Local Drop</h3>
+                        <p class="text-lg leading-relaxed">In Maryland, the <strong>Maryland Bourbon Society</strong> is your best intelligence source. They frequently flag state-wide warehouse drops or "surprise" inventory hitting Montgomery County ABS stores. Real-time alerts on local drops often yield better results than entering over-saturated national lotteries.</p>
+                    </div>
+                    <div id="tab-divergence" class="tab-content">
+                        <h3 class="text-xl font-bold text-bourbon-accent mb-4">Secondary Market Shifts</h3>
+                        <p class="text-lg leading-relaxed">The DMV is seeing a "Secondary Split." While ultra-aged unicorns have dropped in secondary value, mid-tier allocated staples like <strong>Weller Full Proof</strong> and <strong>Stagg</strong> are stabilizing.<br><br><strong>Expert Tip:</strong> If you spot Weller Full Proof for $150 or under in a local MD shop, don't hesitate.</p>
+                    </div>
+                    <div id="tab-storepick" class="tab-content">
+                        <h3 class="text-xl font-bold text-bourbon-accent mb-4">Finding Better Liquid</h3>
+                        <p class="text-lg leading-relaxed">2026 is the year of the <strong>Store Pick</strong>. Local groups are prioritizing unique barrels from Barrell Spirits and New Riff.<br><br>These selected barrels often provide superior complexity compared to standard allocated batches at a much fairer price point. Building store relationships is the smartest play in the current market.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 8: INDUSTRY TRENDS -->
+        <section id="industry-news" class="scroll-mt-24 mb-16">
+            <div class="mb-8 text-center max-w-3xl mx-auto">
+                <span class="release-badge" style="background-color:#2D231E;">Industry Trends</span>
+                <h2 class="text-3xl font-serif font-bold mt-3 mb-3 flex items-center justify-center gap-3"><span>📈</span> Distillery Insights & The Future</h2>
+                <p class="text-lg leading-relaxed">Understanding macro trends helps you predict future allocations and shifts in quality before they hit local shelves.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-bourbon-card p-6 rounded-xl border border-bourbon-border hover:shadow-md transition-shadow group">
+                    <div class="text-3xl mb-4 group-hover:scale-110 transition-transform origin-left">⚖️</div>
+                    <h3 class="text-xl font-bold mb-2">The "Great Recalibration"</h3>
+                    <p class="leading-relaxed">Major distilleries including Jim Beam have paused or slowed production to avoid a bourbon bubble. Expect a return to flagship quality and fewer experimental labels that miss the mark.</p>
+                </div>
+                <div class="bg-bourbon-card p-6 rounded-xl border border-bourbon-border hover:shadow-md transition-shadow group">
+                    <div class="text-3xl mb-4 group-hover:scale-110 transition-transform origin-left">⏳</div>
+                    <h3 class="text-xl font-bold mb-2">Age Statements Are Back</h3>
+                    <p class="leading-relaxed">After years of NAS releases dominating, brands like Heaven Hill and Woodinville are returning to bold age statements. Peerless's 10-Year is the most visible example — and it won't be the last.</p>
+                </div>
+                <div class="bg-bourbon-card p-6 rounded-xl border border-bourbon-border hover:shadow-md transition-shadow group">
+                    <div class="text-3xl mb-4 group-hover:scale-110 transition-transform origin-left">🏅</div>
+                    <h3 class="text-xl font-bold mb-2">Craft Gains Ground</h3>
+                    <p class="leading-relaxed">With New Riff and McLaughlin Distillery earning top honors in 2025, craft is no longer an alternative — it's a destination. Many $50 craft bottles are now outperforming $500 secondary unicorns in blind tastings.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#1A1411] text-white py-8 text-center border-t-4 border-bourbon-accent">
+        <div class="max-w-4xl mx-auto px-4">
+            <p class="font-serif text-xl text-bourbon-accent mb-1">Maryland Bourbon Dad</p>
+            <p class="text-sm text-gray-400 mb-1 italic font-serif">Seek. Sip. Savor the Moment.</p>
+            <p class="text-sm text-gray-400 mb-4">Pricing reflects 2026 market averages and may vary by Maryland county.</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Always Drink Responsibly.</p>
+            <a href="index.html" class="mt-4 inline-block text-xs font-bold uppercase tracking-widest text-bourbon-accent border border-bourbon-accent px-4 py-2 rounded-full hover:bg-bourbon-accent hover:text-white transition-colors">← Back to Home</a>
+        </div>
+    </footer>
+
+    <script>
+        const bourbonData = [
+            { name: "Four Roses Anthology (21 Yr)", msrp: 350, grab: 500, trending: "The first 20+ year release from Four Roses. Extreme rarity with very limited national allocation." },
+            { name: "Elmer T. Lee 40th Ann.", msrp: 100, grab: 250, trending: "Part of the expanded Sazerac barrel select program. One of the most hyped 2026 releases nationally." },
+            { name: "Wild Turkey 16yr Gold Foil", msrp: 175, grab: 300, trending: "A tribute to the legendary 1980s 'Cheesy Gold Foil.' High collector value driven by nostalgia and quality." },
+            { name: "Knob Creek 21 Year", msrp: 250, grab: 350, trending: "Oldest official Beam release to date. Pre-Prohibition profile with massive depth. Worth MSRP every time." },
+            { name: "Old Forester 1924 (10 Yr)", msrp: 129, grab: 160, trending: "The newest staple in the Whiskey Row series. High demand, relatively attainable at MSRP if you're quick." },
+            { name: "Maker's Mark Cellar Aged 26", msrp: 150, grab: 225, trending: "The 2026 blend is 11–14 years refined. A top-tier hunt that regularly outperforms its MSRP in blind tastings." }
+        ];
+        Chart.defaults.color = '#2D231E';
+        Chart.defaults.font.family = 'system-ui, -apple-system, sans-serif';
+        new Chart(document.getElementById('priceChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: bourbonData.map(b => { let words = b.name.split(' '); let wrapped = [], currentLine = ''; words.forEach(word => { if ((currentLine + word).length > 16) { if (currentLine.length > 0) wrapped.push(currentLine.trim()); currentLine = word + ' '; } else { currentLine += word + ' '; } }); if (currentLine.trim().length > 0) wrapped.push(currentLine.trim()); return wrapped; }),
+                datasets: [
+                    { label: 'Target MSRP ($)', data: bourbonData.map(b => b.msrp), backgroundColor: '#EBE3D5', borderColor: '#D4C5B0', borderWidth: 1, borderRadius: 4 },
+                    { label: 'Fair Secondary ($)', data: bourbonData.map(b => b.grab), backgroundColor: '#C46210', borderColor: '#A04D0D', borderWidth: 1, borderRadius: 4 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect: false, callbacks: { label: ctx => (ctx.dataset.label || '') + ': ' + new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(ctx.parsed.y) } } },
+                scales: { y: { beginAtZero: true, title: { display: true, text: 'Price (USD)' }, grid: { color: '#EBE3D5' } }, x: { grid: { display: false } } },
+                onClick: (e, elements) => { if (elements.length > 0) { const i = elements[0].index; const d = document.getElementById('chart-details'); d.innerHTML = `<p class="text-lg"><strong class="text-bourbon-accent">${bourbonData[i].name}:</strong> ${bourbonData[i].trending}</p>`; d.classList.add('bg-white'); d.classList.remove('bg-bourbon-card'); } },
+                onHover: (e, el) => { e.native.target.style.cursor = el[0] ? 'pointer' : 'default'; }
+            }
+        });
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('tab-active'); b.classList.add('tab-inactive'); });
+                btn.classList.remove('tab-inactive'); btn.classList.add('tab-active');
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.getElementById(btn.getAttribute('data-target')).classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>

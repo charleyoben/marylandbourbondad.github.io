@@ -1,73 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The MBD Kitchen | Maryland Bourbon Dad</title>
-<link rel="stylesheet" href="style.css">
-<style>
-.recipe-strip { background: var(--white); border: 1px solid var(--parch); border-left: 4px solid var(--amber); padding: 24px 28px; margin-bottom: 16px; }
-.recipe-strip h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--brown); margin-bottom: 4px; }
-.recipe-strip .meta { font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-.recipe-strip p { font-size: .9rem; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBD | The Kitchen</title>
+    <script>
+        window.tailwind = window.tailwind || {};
+        tailwind.config = {
+            theme: { extend: { colors: { bourbon: { bg: '#F9F6F0', text: '#2D231E', accent: '#C46210', card: '#EBE3D5', border: '#D4C5B0' } } } }
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<div id="site-nav"></div>
-<div class="page-banner">
-  <div class="eyebrow">Maryland Bourbon Dad</div>
-  <h1>The MBD Kitchen</h1>
-  <p>Bourbon in food, not just in glasses. Recipes and pairings that actually work.</p>
-</div>
-<div class="content-wrap">
-  <div class="prose" style="margin-bottom:36px;">
-    <p>Bourbon is a cooking ingredient that most people underutilize. It's not just for glazes — the caramel and vanilla notes work in sauces, the barrel char provides smokiness, and the alcohol carries fat-soluble flavors in ways wine and vinegar can't. This section is about using it properly.</p>
-  </div>
+<body class="bg-bourbon-bg text-bourbon-text p-4">
+    <div class="max-w-6xl mx-auto py-8">
 
-  <div class="section-title">Recipes</div>
-  <p class="section-sub">Dishes with bourbon as a real ingredient, not a gimmick.</p>
+        <header class="text-center mb-12">
+            <h1 class="text-5xl font-serif font-bold text-bourbon-accent mb-2 tracking-tight">The MBD Kitchen</h1>
+            <p class="text-gray-500 uppercase tracking-[0.2em] text-[10px] font-bold">Sip &amp; Pair: The Art of Bourbon Harmony</p>
+            <div class="mt-4">
+                <a href="index.html" class="text-[10px] font-bold uppercase tracking-widest text-bourbon-accent border-b border-bourbon-accent pb-0.5">← Home</a>
+            </div>
+        </header>
 
-  <div class="recipe-strip">
-    <h3>Bourbon Brown Sugar Salmon</h3>
-    <div class="meta">Dinner · 30 min · Serves 4</div>
-    <p>A simple glaze — Elijah Craig, brown sugar, soy, garlic, and a little heat — that caramelizes beautifully on salmon. One of the highest-effort-to-result-ratio meals I make. The bourbon cuts through the richness and the char from the pan mirrors what's happening in the barrel.</p>
-  </div>
+        <!-- Pairing Consultant -->
+        <section class="mb-20">
+            <div class="bg-white rounded-[2rem] border-2 border-bourbon-border p-8 md:p-12 shadow-xl max-w-5xl mx-auto relative overflow-hidden">
+                <div class="absolute -top-4 -right-4 bg-amber-100 w-32 h-32 rounded-full blur-3xl"></div>
 
-  <div class="recipe-strip">
-    <h3>Bourbon Peach BBQ Sauce</h3>
-    <div class="meta">Condiment · 45 min · Makes 2 cups</div>
-    <p>The house BBQ sauce. Built around fresh peaches (or canned in winter), Wild Turkey 101, and a solid hit of smoked paprika. Goes on ribs, chicken, burgers — and yes, I use it as a dipping sauce for sweet potato fries.</p>
-  </div>
+                <div class="flex flex-col md:flex-row gap-12 items-center relative z-10">
+                    <div class="w-full md:w-1/2">
+                        <h3 class="text-2xl font-serif font-bold mb-2">Pairing Consultant</h3>
+                        <p class="text-sm text-gray-500 mb-8 uppercase tracking-widest font-bold">Select a food to find the perfect pour</p>
 
-  <div class="recipe-strip">
-    <h3>Kentucky Butter Cake</h3>
-    <div class="meta">Dessert · 1 hour · Serves 10</div>
-    <p>This is the one people always ask about. Dense, buttery pound cake with a bourbon butter sauce poured over while hot — it soaks in and creates a slightly crisp exterior. Uses Maker's Mark because you don't need complexity here, you need sweetness and vanilla.</p>
-  </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            <button onclick="findMatch('Steak')"   class="p-4 border rounded-2xl bg-bourbon-card font-bold hover:bg-bourbon-accent hover:text-white transition-all shadow-sm">🥩 Steak</button>
+                            <button onclick="findMatch('BBQ')"     class="p-4 border rounded-2xl bg-bourbon-card font-bold hover:bg-bourbon-accent hover:text-white transition-all shadow-sm">🔥 BBQ</button>
+                            <button onclick="findMatch('Seafood')" class="p-4 border rounded-2xl bg-bourbon-card font-bold hover:bg-bourbon-accent hover:text-white transition-all shadow-sm">🦀 Seafood</button>
+                            <button onclick="findMatch('Dessert')" class="p-4 border rounded-2xl bg-bourbon-card font-bold hover:bg-bourbon-accent hover:text-white transition-all shadow-sm">🍫 Dessert</button>
+                            <button onclick="findMatch('Cheese')"  class="p-4 border rounded-2xl bg-bourbon-card font-bold hover:bg-bourbon-accent hover:text-white transition-all shadow-sm">🧀 Cheese</button>
+                        </div>
+                    </div>
 
-  <div class="divider"><span class="divider-icon">🍳</span></div>
+                    <div class="w-full md:w-1/2 min-h-[180px] flex items-center justify-center text-center" id="match-result">
+                        <div class="p-8 border-2 border-dashed border-bourbon-border rounded-3xl opacity-50">
+                            <p class="text-gray-400 italic">"The right bourbon makes the meal. Select a category to begin."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <div class="section-title">Pairing Notes</div>
-  <p class="section-sub">What to eat while you're drinking what.</p>
+        <!-- Kitchen Log -->
+        <section class="max-w-5xl mx-auto">
+            <div class="flex items-center justify-between mb-8 border-b border-bourbon-border pb-3">
+                <h3 class="text-2xl font-serif font-bold flex items-center gap-2">
+                    <span class="text-bourbon-accent">🍴</span> The Pairing Log
+                </h3>
+                <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Dad's Kitchen Successes</span>
+            </div>
 
-  <div class="card-grid">
-    <div class="card">
-      <div class="card-label">Pairing</div>
-      <h3>High Rye Bourbons</h3>
-      <p>Spice-forward ryes pair well with charcuterie, aged cheese, and anything with a mustard component. The rye spice complements rather than fights the savory notes.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20" id="log-container">
+                <!-- Rendered by JS -->
+            </div>
+        </section>
     </div>
-    <div class="card">
-      <div class="card-label">Pairing</div>
-      <h3>Wheated Bourbons</h3>
-      <p>The softer, sweeter profile of wheated bourbons works beautifully with chocolate desserts, pecan-forward dishes, and smoked meats where you want complement, not contrast.</p>
-    </div>
-    <div class="card">
-      <div class="card-label">Pairing</div>
-      <h3>Cask Strength</h3>
-      <p>High-proof bourbons need food with enough fat and richness to stand up. Bold cheeses, short ribs, and dark chocolate work. Light salads do not.</p>
-    </div>
-  </div>
-</div>
-<div id="site-footer"></div>
-<script src="nav.js"></script>
+
+    <script>
+        // ── ADD NEW PAIRINGS HERE ─────────────────────────────────────────────────
+        const pairings = [
+            { meal: "Braised Short Ribs", bottle: "Booker's Pond Batch", verdict: "Solid Match" }
+        ];
+        // ─────────────────────────────────────────────────────────────────────────
+
+        const suggestions = {
+            "Steak":   { bourbon: "High Rye Bourbon",             why: "The spicy rye profile cuts through heavy fats and pepper seasoning perfectly." },
+            "BBQ":     { bourbon: "Wheated Bourbon",              why: "The softer wheat profile complements the sweetness and smoke of local MD BBQ." },
+            "Dessert": { bourbon: "Finished Bourbon",             why: "Port or Sherry finishes amplify dark chocolate and caramel notes." },
+            "Cheese":  { bourbon: "Bottled-in-Bond (100+ Proof)", why: "Higher proof stands up to sharp, aged cheddars and pungent blues." },
+            "Seafood": { bourbon: "Maryland Rye",                 why: "A sweeter MD Rye is the surprising champion for Old Bay-seasoned seafood." }
+        };
+
+        function findMatch(food) {
+            const match = suggestions[food];
+            if (!match) return;
+            document.getElementById('match-result').innerHTML = `
+                <div class="bg-white p-6 rounded-2xl border border-amber-500 shadow-inner w-full">
+                    <span class="text-[10px] font-bold text-amber-600 uppercase tracking-widest mb-1 block">Recommended Profile</span>
+                    <h4 class="text-3xl font-serif font-bold mb-2">${match.bourbon}</h4>
+                    <p class="text-sm text-gray-600 italic leading-relaxed">"${match.why}"</p>
+                </div>
+            `;
+        }
+
+        const verdictStyles = {
+            "Perfection":                "bg-green-50 border-green-200 text-green-700",
+            "Solid Match":               "bg-amber-50 border-amber-200 text-amber-700",
+            "Surprising Duo":            "bg-blue-50 border-blue-200 text-blue-700",
+            "Good, but could be better": "bg-gray-50 border-gray-200 text-gray-600",
+            "Flavor Clash":              "bg-red-50 border-red-200 text-red-600"
+        };
+
+        function renderLogs() {
+            const container = document.getElementById('log-container');
+            container.innerHTML = '';
+            pairings.forEach(log => {
+                const style = verdictStyles[log.verdict] || "bg-gray-50 border-gray-200 text-gray-600";
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-2xl border border-bourbon-border shadow-sm hover:border-amber-400 transition-colors";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-3 gap-2">
+                        <h5 class="font-bold text-lg leading-tight">${log.meal}</h5>
+                        <span class="text-[9px] px-2 py-1 rounded font-bold uppercase border tracking-tighter whitespace-nowrap ${style}">${log.verdict}</span>
+                    </div>
+                    <p class="text-sm text-amber-700 font-bold italic">Poured with: ${log.bottle}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        renderLogs();
+    </script>
 </body>
 </html>

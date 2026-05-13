@@ -1,52 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MBD Field Notes | Maryland Bourbon Dad</title>
-<link rel="stylesheet" href="style.css">
-<style>
-.note-card { background: var(--white); border: 1px solid var(--parch); padding: 24px 28px; margin-bottom: 16px; display: grid; grid-template-columns: 80px 1fr; gap: 24px; align-items: start; }
-.note-date { font-family: 'Cinzel', serif; font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: var(--amber); line-height: 1.4; }
-.note-body h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--brown); margin-bottom: 6px; }
-.note-body .where { font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); margin-bottom: 10px; }
-.note-body p { font-size: .9rem; color: var(--text); }
-@media (max-width: 600px) { .note-card { grid-template-columns: 1fr; gap: 8px; } }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBD | Field Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bourbon: {
+                            bg:     '#F9F6F0',
+                            text:   '#2D231E',
+                            accent: '#C46210',
+                            card:   '#EBE3D5',
+                            border: '#D4C5B0'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Georgia', 'Cambria', 'serif']
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body { background-color: #F9F6F0; color: #2D231E; }
+        .v-fav      { background:#FEF3C7; color:#92400E; border-color:#FCD34D; }
+        .v-again    { background:#D1FAE5; color:#065F46; border-color:#6EE7B7; }
+        .v-worth    { background:#E0F2FE; color:#0C4A6E; border-color:#7DD3FC; }
+        .v-drink    { background:#F3F4F6; color:#374151; border-color:#D1D5DB; }
+        .v-beer     { background:#FEE2E2; color:#991B1B; border-color:#FCA5A5; }
+        .card-enter { animation: cardIn 0.35s ease both; }
+        @keyframes cardIn {
+            from { opacity:0; transform:translateY(10px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+        .vbtn {
+            font-size:10px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+            padding:6px 14px; border-radius:999px; border:1px solid #D4C5B0;
+            background:#EBE3D5; color:#6B7280; cursor:pointer; transition:all .15s;
+        }
+        .vbtn.active { background:#C46210; color:#fff; border-color:#C46210; }
+        .spinner {
+            width:28px; height:28px; border:3px solid #D4C5B0; border-top-color:#C46210;
+            border-radius:50%; animation: spin .7s linear infinite; margin:0 auto;
+        }
+        @keyframes spin { to { transform:rotate(360deg); } }
+        .notes-block {
+            background:#F9F3E8; border-left:3px solid #C46210; border-radius:0 8px 8px 0;
+            padding:10px 14px; margin-top:12px; font-size:13px; color:#4B3832;
+            line-height:1.6; font-style:italic;
+        }
+        .meta-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+        .meta-chip {
+            font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+            padding:3px 10px; border-radius:6px; border:1px solid #D4C5B0;
+            background:#F9F6F0; color:#5C4A3A;
+        }
+        .rank-badge {
+            width:32px; height:32px; border-radius:50%; background:#EBE3D5;
+            border:1px solid #D4C5B0; display:flex; align-items:center; justify-content:center;
+            font-size:11px; font-weight:800; color:#9A7B5A; flex-shrink:0;
+        }
+        .rank-badge.gold   { background:#FEF3C7; border-color:#FCD34D; color:#92400E; }
+        .rank-badge.silver { background:#F3F4F6; border-color:#D1D5DB; color:#374151; }
+        .rank-badge.bronze { background:#FEF0E7; border-color:#FDBA74; color:#9A3412; }
+        .empty-glass { font-size:48px; margin-bottom:12px; opacity:.4; }
+    </style>
 </head>
-<body>
-<div id="site-nav"></div>
-<div class="page-banner">
-  <div class="eyebrow">The Pour</div>
-  <h1>MBD Field Notes</h1>
-  <p>Quick impressions from bars, tastings, and retail finds. Short form. Honest. No fluff.</p>
+<body class="antialiased">
+
+<div class="max-w-5xl mx-auto px-4 py-8">
+
+    <header class="mb-10 text-center py-10 px-4 border-b border-bourbon-border">
+        <div class="w-16 h-16 mb-4 rounded-full overflow-hidden bg-white shadow-md border border-bourbon-border mx-auto flex items-center justify-center">
+            <span class="text-2xl">🥃</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-serif font-bold text-bourbon-accent mb-2 tracking-tight">MBD Field Notes</h1>
+        <p class="text-base text-gray-500 italic max-w-xl mx-auto">
+            "Every Old Fashioned I've ordered, ranked straight. No muddle, no mercy."
+        </p>
+        <div class="flex items-center justify-center gap-4 mt-4 text-gray-400 font-bold uppercase text-[10px] tracking-[.25em]">
+            <span>Bar &amp; Restaurant Finds</span>
+            <span class="w-1.5 h-1.5 bg-bourbon-accent rounded-full inline-block"></span>
+            <span>Old Fashioneds Only</span>
+        </div>
+        <div class="mt-4">
+            <a href="index.html" class="text-[10px] font-bold uppercase tracking-widest text-bourbon-accent border-b border-bourbon-accent pb-0.5">← Home</a>
+        </div>
+    </header>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-2xl border border-bourbon-border p-5 text-center shadow-sm">
+            <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Total Logged</div>
+            <div id="stat-total" class="text-3xl font-serif font-bold">—</div>
+        </div>
+        <div class="bg-white rounded-2xl border border-bourbon-border border-l-4 border-l-bourbon-accent p-5 text-center shadow-sm">
+            <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Dad's Favorites</div>
+            <div id="stat-fav" class="text-3xl font-serif font-bold text-bourbon-accent">—</div>
+        </div>
+        <div class="bg-white rounded-2xl border border-bourbon-border p-5 text-center shadow-sm">
+            <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Order It Again</div>
+            <div id="stat-again" class="text-3xl font-serif font-bold">—</div>
+        </div>
+        <div class="bg-bourbon-card rounded-2xl border border-bourbon-border p-5 text-center shadow-sm">
+            <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Stick to Beer</div>
+            <div id="stat-beer" class="text-3xl font-serif font-bold">—</div>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-bourbon-border shadow-sm p-5 mb-8">
+        <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <input type="text" id="search" placeholder="Search by name, location, or bourbon…" oninput="renderNotes()"
+                class="w-full md:w-80 px-5 py-3 rounded-full border border-bourbon-border bg-bourbon-bg text-sm focus:outline-none focus:ring-2 focus:ring-bourbon-accent">
+            <div class="flex flex-wrap justify-center gap-2" id="verdict-filters">
+                <button class="vbtn" data-verdict="Dad's Favorite" onclick="toggleVerdict(this)">⭐ Dad's Favorite</button>
+                <button class="vbtn" data-verdict="Order It Again" onclick="toggleVerdict(this)">🔄 Order It Again</button>
+                <button class="vbtn" data-verdict="Worth the Stop" onclick="toggleVerdict(this)">👍 Worth the Stop</button>
+                <button class="vbtn" data-verdict="Drinkable"      onclick="toggleVerdict(this)">🤷 Drinkable</button>
+                <button class="vbtn" data-verdict="Stick to Beer"  onclick="toggleVerdict(this)">🍺 Stick to Beer</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin-tools" class="hidden mb-8 bg-white p-8 rounded-2xl border-2 border-dashed border-bourbon-accent shadow-lg">
+        <h3 class="text-sm font-bold uppercase tracking-widest text-bourbon-accent mb-6 flex items-center gap-2">🛠️ Log a New Old Fashioned</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+            <div class="space-y-3">
+                <input type="text" id="d-name"     placeholder="Name of the Old Fashioned" class="w-full p-3 rounded-xl border border-bourbon-border bg-bourbon-bg focus:outline-none focus:ring-1 focus:ring-bourbon-accent text-sm">
+                <input type="text" id="d-location" placeholder="Bar or Restaurant Name + City" class="w-full p-3 rounded-xl border border-bourbon-border bg-bourbon-bg focus:outline-none focus:ring-1 focus:ring-bourbon-accent text-sm">
+                <input type="text" id="d-bourbon"  placeholder="Bourbon or Rye used (if known)" class="w-full p-3 rounded-xl border border-bourbon-border bg-bourbon-bg focus:outline-none focus:ring-1 focus:ring-bourbon-accent text-sm">
+                <input type="text" id="d-visited"  placeholder="Date Visited (e.g. May 2025)" class="w-full p-3 rounded-xl border border-bourbon-border bg-bourbon-bg focus:outline-none focus:ring-1 focus:ring-bourbon-accent text-sm">
+            </div>
+            <div class="space-y-3">
+                <select id="d-verdict" class="w-full p-3 rounded-xl border border-bourbon-border bg-white text-sm focus:outline-none focus:ring-1 focus:ring-bourbon-accent">
+                    <option>Dad's Favorite</option>
+                    <option>Order It Again</option>
+                    <option selected>Worth the Stop</option>
+                    <option>Drinkable</option>
+                    <option>Stick to Beer</option>
+                </select>
+                <textarea id="d-notes" placeholder="What made it memorable? What did they get right or wrong?" class="w-full p-3 rounded-xl border border-bourbon-border bg-bourbon-bg h-32 resize-none focus:outline-none focus:ring-1 focus:ring-bourbon-accent text-sm"></textarea>
+            </div>
+        </div>
+        <div class="flex justify-end">
+            <button onclick="addNote()" class="bg-bourbon-accent text-white px-8 py-3 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-bourbon-text transition-colors shadow-md">Log It</button>
+        </div>
+    </div>
+
+    <div id="notes-list" class="space-y-4 mb-20">
+        <div class="py-16 text-center" id="loading-state">
+            <div class="spinner mb-4"></div>
+            <p class="text-sm text-gray-400 uppercase tracking-widest font-bold">Loading Field Notes…</p>
+        </div>
+    </div>
+
+    <footer class="py-12 border-t border-bourbon-border text-center">
+        <div id="admin-login-ui">
+            <p class="text-[10px] text-gray-400 mb-3 uppercase tracking-[.2em] font-bold">Field Agent Access Only</p>
+            <div class="flex justify-center gap-2">
+                <input type="password" id="admin-pin-input" placeholder="PIN"
+                    class="w-24 p-2 text-center border border-bourbon-border rounded-lg bg-transparent text-sm focus:outline-none focus:ring-1 focus:ring-bourbon-accent">
+                <button onclick="checkPin()" class="text-[10px] bg-bourbon-card px-5 py-2 rounded-lg border border-bourbon-border font-bold uppercase tracking-widest hover:bg-white transition-colors shadow-sm">Unlock</button>
+            </div>
+        </div>
+    </footer>
+
 </div>
-<div class="content-wrap">
-  <div class="note-card">
-    <div class="note-date">May 2026</div>
-    <div class="note-body">
-      <h4>Old Line Spirits — Tasting Room Visit</h4>
-      <div class="where">📍 Baltimore, MD</div>
-      <p>Finally made it back to Old Line's tasting room in Baltimore. The American Single Malt is still the standout — more complex than it gets credit for, with a malt character that leans closer to Scotch than bourbon. The rum lineup has improved significantly. Worth the drive from Columbia.</p>
-    </div>
-  </div>
-  <div class="note-card">
-    <div class="note-date">Apr 2026</div>
-    <div class="note-body">
-      <h4>Total Wine Haul — Ellicott City</h4>
-      <div class="where">📍 Ellicott City, MD</div>
-      <p>Found Booker's 2025-02 at MSRP — grabbed two. Also picked up the new Angel's Envy Triple Oak which had been eluding me. Total Wine in EC consistently has better allocation than the Columbia locations. Pro tip: go Thursday morning.</p>
-    </div>
-  </div>
-  <div class="note-card">
-    <div class="note-date">Mar 2026</div>
-    <div class="note-body">
-      <h4>Sagamore Spirit Distillery</h4>
-      <div class="where">📍 Port Covington, Baltimore, MD</div>
-      <p>Brought a friend who'd never done a distillery tour before. Sagamore's tour is one of the better-produced experiences in the state. The rickhouse is legitimately impressive, and the guide actually knew the answers to real questions. The tasting room pour of the cask strength was exceptional. Better than I remembered.</p>
-    </div>
-  </div>
-</div>
-<div id="site-footer"></div>
-<script src="nav.js"></script>
+
+<div id="toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-bourbon-text text-white px-6 py-3 rounded-full shadow-2xl transition-opacity opacity-0 pointer-events-none text-sm font-bold z-50">Logged.</div>
+
+<script>
+    const API_URL   = 'https://script.google.com/macros/s/AKfycbyAz0K3fcbxI-w17t9lBeMpimP4gNMhYP9_Bg2lYfmbA8CIjYxsE1tm3pTobbYWjW4q/exec';
+    const SHEET     = 'FieldNotes';
+    const ADMIN_PIN = '1924';
+
+    let notes = [], activeVerdicts = [], isAdmin = false;
+
+    const verdictStyle = {
+        "Dad's Favorite" : { cls:'v-fav',   icon:'⭐' },
+        'Order It Again' : { cls:'v-again',  icon:'🔄' },
+        'Worth the Stop' : { cls:'v-worth',  icon:'👍' },
+        'Drinkable'      : { cls:'v-drink',  icon:'🤷' },
+        'Stick to Beer'  : { cls:'v-beer',   icon:'🍺' },
+    };
+    const verdictOrder = ["Dad's Favorite","Order It Again","Worth the Stop","Drinkable","Stick to Beer"];
+
+    const showToast = (msg) => {
+        const t = document.getElementById('toast');
+        t.innerText = msg;
+        t.classList.remove('opacity-0');
+        setTimeout(() => t.classList.add('opacity-0'), 3000);
+    };
+
+    const apiFetch = () => {
+        return new Promise((resolve, reject) => {
+            const cb = 'mbd_cb_' + Date.now();
+            const script = document.createElement('script');
+            window[cb] = (data) => { delete window[cb]; script.remove(); resolve(Array.isArray(data) ? data : []); };
+            script.onerror = () => { delete window[cb]; script.remove(); reject(new Error('JSONP failed')); };
+            script.src = `${API_URL}?sheet=${SHEET}&callback=${cb}`;
+            document.head.appendChild(script);
+        });
+    };
+
+    const apiPost = async (payload) => {
+        payload.sheet = SHEET;
+        const res = await fetch(API_URL, { method:'POST', body: JSON.stringify(payload) });
+        return res.json();
+    };
+
+    const loadNotes = async () => {
+        try {
+            const data = await apiFetch();
+            notes = Array.isArray(data) ? data : [];
+            updateStats();
+            renderNotes();
+            document.getElementById('loading-state').style.display = 'none';
+        } catch(e) {
+            document.getElementById('loading-state').innerHTML =
+                '<p class="text-red-400 font-bold text-sm py-8">⚠️ Could not load Field Notes. Check your Apps Script URL and sheet tab name.</p>';
+        }
+    };
+
+    const updateStats = () => {
+        document.getElementById('stat-total').innerText = notes.length;
+        document.getElementById('stat-fav').innerText   = notes.filter(n => n.verdict === "Dad's Favorite").length;
+        document.getElementById('stat-again').innerText = notes.filter(n => n.verdict === 'Order It Again').length;
+        document.getElementById('stat-beer').innerText  = notes.filter(n => n.verdict === 'Stick to Beer').length;
+    };
+
+    window.toggleVerdict = (btn) => {
+        const v = btn.dataset.verdict;
+        if (activeVerdicts.includes(v)) { activeVerdicts = activeVerdicts.filter(x => x !== v); btn.classList.remove('active'); }
+        else { activeVerdicts.push(v); btn.classList.add('active'); }
+        renderNotes();
+    };
+
+    const rankClass = (i) => { if (i===0) return 'gold'; if (i===1) return 'silver'; if (i===2) return 'bronze'; return ''; };
+
+    const renderNotes = () => {
+        const list = document.getElementById('notes-list');
+        const searchVal = document.getElementById('search').value.toLowerCase();
+        const filtered = notes.filter(n => {
+            const matchSearch  = (n.name||'').toLowerCase().includes(searchVal) || (n.location||'').toLowerCase().includes(searchVal) || (n.bourbon||'').toLowerCase().includes(searchVal);
+            const matchVerdict = activeVerdicts.length === 0 || activeVerdicts.includes(n.verdict);
+            return matchSearch && matchVerdict;
+        });
+        filtered.sort((a,b) => {
+            const ai = verdictOrder.indexOf(a.verdict), bi = verdictOrder.indexOf(b.verdict);
+            if (ai !== bi) return ai - bi;
+            return (b.visited||'').localeCompare(a.visited||'');
+        });
+        if (filtered.length === 0) {
+            list.innerHTML = `<div class="py-20 text-center"><div class="empty-glass">🥃</div><p class="text-gray-400 italic text-sm">No field notes yet${activeVerdicts.length || searchVal ? ' matching those filters' : ''}.</p>${!notes.length ? '<p class="text-gray-400 text-xs mt-2 uppercase tracking-widest font-bold">Get out there and order one.</p>' : ''}</div>`;
+            return;
+        }
+        list.innerHTML = filtered.map((n, i) => {
+            const vs = verdictStyle[n.verdict] || { cls:'v-drink', icon:'🤷' };
+            const rClass = rankClass(i);
+            const notesHtml = n.notes ? `<div class="notes-block">${n.notes}</div>` : '';
+            const bourbonChip = n.bourbon ? `<span class="meta-chip">🥃 ${n.bourbon}</span>` : '';
+            const visitedChip = n.visited ? `<span class="meta-chip">📅 ${n.visited}</span>` : '';
+            const adminBtn = isAdmin ? `<button onclick="deleteNote(${n.rowIndex})" class="text-[10px] text-red-400 hover:text-red-600 uppercase font-bold tracking-widest transition-colors ml-auto">Delete</button>` : '';
+            return `<div class="card-enter bg-white rounded-xl border border-bourbon-border shadow-sm hover:shadow-md transition-all p-6" style="animation-delay:${i*25}ms">
+                <div class="flex items-start gap-4">
+                    <div class="rank-badge ${rClass}">${i+1}</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex flex-wrap justify-between items-start gap-2 mb-1">
+                            <div>
+                                <h3 class="text-lg font-serif font-bold leading-tight">${n.name||'Old Fashioned'}</h3>
+                                <p class="text-sm font-bold text-bourbon-accent mt-0.5">${n.location||''}</p>
+                            </div>
+                            <span class="text-[10px] font-bold uppercase px-3 py-1 rounded-full border ${vs.cls} whitespace-nowrap">${vs.icon} ${n.verdict||''}</span>
+                        </div>
+                        <div class="meta-row">${bourbonChip}${visitedChip}${adminBtn}</div>
+                        ${notesHtml}
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
+    };
+
+    window.addNote = async () => {
+        const name = document.getElementById('d-name').value.trim();
+        const location = document.getElementById('d-location').value.trim();
+        const bourbon = document.getElementById('d-bourbon').value.trim();
+        const visited = document.getElementById('d-visited').value.trim();
+        const verdict = document.getElementById('d-verdict').value;
+        const n = document.getElementById('d-notes').value.trim();
+        if (!name || !location) return showToast('Name and Location are required.');
+        try {
+            await apiPost({ action:'add', name, location, bourbon, visited, verdict, notes: n });
+            ['d-name','d-location','d-bourbon','d-visited','d-notes'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('d-verdict').selectedIndex = 2;
+            showToast('Field Note logged!');
+            await loadNotes();
+        } catch(e) { showToast('Error saving. Check your Apps Script.'); }
+    };
+
+    window.deleteNote = async (rowIndex) => {
+        if (!confirm('Delete this field note?')) return;
+        try { await apiPost({ action:'delete', rowIndex }); showToast('Deleted.'); await loadNotes(); }
+        catch(e) { showToast('Error deleting.'); }
+    };
+
+    window.checkPin = () => {
+        const input = document.getElementById('admin-pin-input');
+        if (input.value.trim() === ADMIN_PIN) {
+            isAdmin = true;
+            document.getElementById('admin-login-ui').classList.add('hidden');
+            document.getElementById('admin-tools').classList.remove('hidden');
+            renderNotes();
+            showToast('Field Agent Mode Active');
+        } else { showToast('Incorrect PIN'); input.value = ''; }
+    };
+
+    document.getElementById('admin-pin-input').addEventListener('keypress', e => { if (e.key==='Enter') checkPin(); });
+    loadNotes();
+</script>
+
 </body>
 </html>
