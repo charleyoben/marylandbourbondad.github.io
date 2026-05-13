@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Distillery Scout | Maryland Bourbon Dad</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.distillery-card { background: var(--white); border: 1px solid var(--parch); border-radius: 4px; padding: 32px; margin-bottom: 24px; }
+.distillery-card .d-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
+.distillery-card h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--brown); }
+.distillery-card .d-location { font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.mbd-rating { background: var(--brown); color: var(--amber); font-family: 'Cinzel', serif; font-size: .65rem; letter-spacing: .12em; padding: 6px 14px; border-radius: 2px; white-space: nowrap; }
+.distillery-card p { font-size: .92rem; margin-bottom: 10px; }
+.d-picks { background: var(--cream); padding: 14px 18px; border-radius: 3px; margin-top: 12px; }
+.d-picks h4 { font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.d-picks ul { list-style: none; }
+.d-picks ul li { font-size: .88rem; padding: 3px 0; }
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<div class="page-banner">
+  <div class="eyebrow">Maryland Bourbon Dad</div>
+  <h1>The Distillery Scout</h1>
+  <p>Maryland distilleries, reviewed and mapped. Old Line State pride — we make good bourbon here.</p>
+</div>
+<div class="content-wrap">
+  <div class="prose" style="margin-bottom:36px;">
+    <p>Maryland has a real distilling tradition — rye whiskey was a Maryland thing long before Kentucky took the crown. The modern craft scene is young but growing fast. Here's where I've been and what I think.</p>
+  </div>
+
+  <div class="distillery-card">
+    <div class="d-header"><h3>Sagamore Spirit</h3><span class="mbd-rating">MBD: Must Visit</span></div>
+    <div class="d-location">📍 Port Covington, Baltimore, MD</div>
+    <p>The most polished distillery experience in Maryland by a significant margin. The facility at Port Covington is genuinely impressive — massive rickhouses, a well-run tasting room, and guides who know their material. The water story (Maryland limestone-filtered spring water) isn't just marketing.</p>
+    <p>The product lineup is solid and improving. The Straight Rye is the baseline; the Double Oak and cask-strength expressions are where it gets interesting. Tour prices are fair and the tasting is generous.</p>
+    <div class="d-picks"><h4>What to Buy</h4><ul><li>🥇 Double Oak Rye — the flagship expression</li><li>🥈 Straight Rye — everyday sipper, priced right</li><li>🔍 Limited Cask Strength — grab it when you see it</li></ul></div>
+  </div>
+
+  <div class="distillery-card">
+    <div class="d-header"><h3>Old Line Spirits</h3><span class="mbd-rating">MBD: Worth the Drive</span></div>
+    <div class="d-location">📍 Baltimore, MD</div>
+    <p>Old Line does things a little differently — they focus on American Single Malt, which puts them in a less-crowded category and lets their grain work speak without the bourbon reference points. The tasting room in Baltimore is casual and genuinely fun, not corporate.</p>
+    <p>The rum lineup has improved significantly over the last two years. If you haven't been back recently, it's worth another visit.</p>
+    <div class="d-picks"><h4>What to Buy</h4><ul><li>🥇 American Single Malt — the standout</li><li>🥈 Aged Rum — better than you'd expect</li></ul></div>
+  </div>
+
+  <div class="distillery-card">
+    <div class="d-header"><h3>Tenth Ward Distilling</h3><span class="mbd-rating">MBD: Local Gem</span></div>
+    <div class="d-location">📍 Frederick, MD</div>
+    <p>Frederick's craft scene is underrated across the board, and Tenth Ward is part of why. Smaller operation, more experimental, and more willing to try things that don't fit a standard category. The absinthe alone is worth the trip if you're into that.</p>
+    <div class="d-picks"><h4>What to Try</h4><ul><li>🥇 Maryland Straight Rye Whiskey</li><li>🔍 Experimental releases — ask what's in the tasting room</li></ul></div>
+  </div>
+</div>
+<div id="site-footer"></div>
+<script src="nav.js"></script>
+</body>
+</html>

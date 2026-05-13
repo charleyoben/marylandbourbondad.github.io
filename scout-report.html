@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The MBD Scout Report | Maryland Bourbon Dad</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.scout-header { background: var(--brown); color: var(--cream); padding: 8px 16px; font-family: 'Cinzel', serif; font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; }
+.intel-card { background: var(--white); border: 1px solid var(--parch); border-left: 4px solid var(--amber); padding: 28px 28px 24px; margin-bottom: 20px; }
+.intel-card .tag { font-family: 'Cinzel', serif; font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.intel-card h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--brown); margin-bottom: 10px; line-height: 1.3; }
+.intel-card p { font-size: .92rem; color: var(--text); margin-bottom: 10px; }
+.intel-card .verdict { font-family: 'Cinzel', serif; font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); border-top: 1px solid var(--parch); padding-top: 12px; margin-top: 12px; }
+.intel-card .verdict span { color: var(--amber); }
+.rankings-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+.rankings-table th { font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); background: var(--brown); padding: 10px 14px; text-align: left; }
+.rankings-table td { padding: 12px 14px; border-bottom: 1px solid var(--parch); font-size: .9rem; }
+.rankings-table tr:nth-child(even) td { background: var(--cream); }
+.rank-num { font-family: 'Cinzel', serif; font-weight: 700; color: var(--amber); }
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<div class="page-banner">
+  <div class="eyebrow">Intelligence Briefing</div>
+  <h1>The MBD Scout Report</h1>
+  <p>New releases, updated rankings, local Maryland intel, and the bottles worth your money right now. No hype. No unicorn chasing.</p>
+</div>
+<div class="content-wrap">
+  <div class="scout-header">Latest Intel — May 2026</div>
+
+  <div style="margin-top: 24px;">
+    <div class="intel-card">
+      <div class="tag">🔥 New Release Alert</div>
+      <h3>Peerless Kentucky Straight Bourbon 10 Year</h3>
+      <p>Peerless dropped a 10-year expression and it's legitimately worth paying attention to. At cask strength from their sweet mash process, this is a departure from the lighter younger releases that put them on the map. Rich oak, baking spice, and a vanilla sweetness that doesn't feel manufactured.</p>
+      <p>The sweet mash process gives Peerless a distinctive grain-forward base that takes on a different character at 10 years — less bright fruit, more resolved complexity. Approachable for cask strength, which is a plus.</p>
+      <div class="verdict">MBD Verdict: <span>Buy if you find it at MSRP. Don't overpay.</span></div>
+    </div>
+
+    <div class="intel-card">
+      <div class="tag">📍 Maryland Local Spotlight</div>
+      <h3>Sagamore Spirit — What's Worth Buying Right Now</h3>
+      <p>Sagamore continues to be the most accessible quality Maryland bourbon. Their rye-heavy mash bill and Port Covington water story aren't just marketing — you taste the mineral quality in the finish. The Double Oak is the pick of the current lineup if you can find it.</p>
+      <div class="verdict">MBD Verdict: <span>Double Oak is the move. Straight Rye is the everyday sipper.</span></div>
+    </div>
+
+    <div class="intel-card">
+      <div class="tag">💰 Value Picks — Right Now</div>
+      <h3>Three Bottles Worth Buying This Month</h3>
+      <p><strong>Elijah Craig Small Batch</strong> — Reliable, complex, $30. The benchmark for this price tier. Stop overthinking it.</p>
+      <p><strong>Knob Creek 9 Year</strong> — Back to form with the 9-year age statement. Bold, oaky, 100 proof. Great for cocktails and sipping.</p>
+      <p><strong>Wild Turkey 101</strong> — Jimmy Russell's house. High rye, high proof, honest price. Sleeper pick that never disappoints.</p>
+    </div>
+  </div>
+
+  <div class="divider"><span class="divider-icon">📊</span></div>
+
+  <div class="section-title">MBD Current Rankings</div>
+  <p class="section-sub">Updated May 2026 — bottles I've tasted in the last 12 months, ranked by overall score.</p>
+  <table class="rankings-table">
+    <thead>
+      <tr><th>#</th><th>Bottle</th><th>Category</th><th>MBD Score</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="rank-num">1</td><td>Booker's 2025-02</td><td>Cask Strength</td><td>94</td></tr>
+      <tr><td class="rank-num">2</td><td>Angel's Envy Triple Oak</td><td>Finished</td><td>92</td></tr>
+      <tr><td class="rank-num">3</td><td>Widow Jane Decadence</td><td>Specialty</td><td>91</td></tr>
+      <tr><td class="rank-num">4</td><td>Elijah Craig Barrel Proof (A124)</td><td>Cask Strength</td><td>90</td></tr>
+      <tr><td class="rank-num">5</td><td>Four Roses Single Barrel</td><td>Single Barrel</td><td>89</td></tr>
+      <tr><td class="rank-num">6</td><td>Sagamore Spirit Double Oak</td><td>Maryland</td><td>87</td></tr>
+      <tr><td class="rank-num">7</td><td>Knob Creek 9 Year</td><td>Everyday</td><td>86</td></tr>
+      <tr><td class="rank-num">8</td><td>Elijah Craig Small Batch</td><td>Everyday</td><td>85</td></tr>
+    </tbody>
+  </table>
+</div>
+<div id="site-footer"></div>
+<script src="nav.js"></script>
+</body>
+</html>

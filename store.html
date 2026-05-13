@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The MBD Store | Maryland Bourbon Dad</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+.product-card { background: var(--white); border: 1px solid var(--parch); border-radius: 4px; overflow: hidden; }
+.product-img { background: var(--brown); height: 200px; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+.product-body { padding: 24px; }
+.product-body .product-type { font-family: 'Cinzel', serif; font-size: .55rem; letter-spacing: .15em; text-transform: uppercase; color: var(--amber); margin-bottom: 6px; }
+.product-body h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--brown); margin-bottom: 8px; }
+.product-body p { font-size: .88rem; color: var(--muted); margin-bottom: 16px; }
+.product-price { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700; color: var(--brown); margin-bottom: 14px; }
+.etsy-btn { display: block; text-align: center; background: var(--amber); color: var(--smoke); font-family: 'Cinzel', serif; font-size: .62rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 700; padding: 11px; border-radius: 2px; text-decoration: none; transition: background .2s; }
+.etsy-btn:hover { background: var(--amber-lt); }
+.store-intro { background: var(--brown); color: var(--cream); padding: 40px 24px; text-align: center; margin-bottom: 48px; border-radius: 4px; }
+.store-intro h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-style: italic; margin-bottom: 10px; }
+.store-intro p { color: var(--parch); font-size: .93rem; max-width: 520px; margin: 0 auto; }
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<div class="page-banner">
+  <div class="eyebrow">Maryland Bourbon Dad</div>
+  <h1>The MBD Store</h1>
+  <p>Bourbon scorecards, tasting party kits, and digital downloads. Printable, practical, Maryland-made.</p>
+</div>
+<div class="content-wide">
+  <div class="store-intro">
+    <h2>Digital Downloads — Print Anywhere</h2>
+    <p>All products are instant-download PDFs. Print at home, at Staples, or on cardstock. No shipping, no waiting. Just bourbon fun.</p>
+  </div>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-img">📋</div>
+      <div class="product-body">
+        <div class="product-type">Digital Download · PDF</div>
+        <h3>Bourbon Tasting Scorecard</h3>
+        <p>Two-page scorecard for scoring bourbon on nose, palate, finish, and overall. Branded, printable, and actually useful at a tasting.</p>
+        <div class="product-price">$4.99</div>
+        <a href="https://www.etsy.com/shop/MarylandBourbonDad" class="etsy-btn" target="_blank">Buy on Etsy →</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🎉</div>
+      <div class="product-body">
+        <div class="product-type">Digital Download · PDF Bundle</div>
+        <h3>Bourbon Party Kit</h3>
+        <p>Everything you need to host a bourbon tasting — scorecard, flight sheet, blind tasting challenge, trivia, and host checklist. The complete package.</p>
+        <div class="product-price">$9.99</div>
+        <a href="https://www.etsy.com/shop/MarylandBourbonDad" class="etsy-btn" target="_blank">Buy on Etsy →</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🔍</div>
+      <div class="product-body">
+        <div class="product-type">Digital Download · PDF</div>
+        <h3>Blind Tasting Challenge Sheet</h3>
+        <p>Six-pour blind tasting format with reveal at the end. Perfect for testing your palate or settling an argument about your go-to bottle.</p>
+        <div class="product-price">$3.99</div>
+        <a href="https://www.etsy.com/shop/MarylandBourbonDad" class="etsy-btn" target="_blank">Buy on Etsy →</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🎭</div>
+      <div class="product-body">
+        <div class="product-type">Digital Download · Game Kit</div>
+        <h3>Murder at the Deep End</h3>
+        <p>A full pool party murder mystery game for up to 22 players. Characters, clue cards, host guide, and a randomized killer assignment so even the host doesn't know whodunit.</p>
+        <div class="product-price">$12.99</div>
+        <a href="https://www.etsy.com/shop/MarylandBourbonDad" class="etsy-btn" target="_blank">Buy on Etsy →</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="site-footer"></div>
+<script src="nav.js"></script>
+</body>
+</html>

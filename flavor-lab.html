@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Flavor Profile Lab | Maryland Bourbon Dad</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.lab-card { background: var(--white); border: 1px solid var(--parch); border-radius: 4px; padding: 32px; margin-bottom: 24px; }
+.lab-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+.lab-card .bottle-name { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--brown); }
+.lab-card .bottle-meta { font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.score-block { text-align: right; }
+.score-block .mbd-score { font-family: 'Cinzel', serif; font-size: 2.5rem; font-weight: 900; color: var(--amber); line-height: 1; }
+.score-block .score-label { font-family: 'Cinzel', serif; font-size: .55rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.score-bars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
+.score-bar-item { text-align: center; }
+.score-bar-item .bar-label { font-family: 'Cinzel', serif; font-size: .55rem; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); margin-bottom: 6px; }
+.score-bar-item .bar-track { height: 6px; background: var(--parch); border-radius: 3px; overflow: hidden; margin-bottom: 4px; }
+.score-bar-item .bar-fill { height: 100%; background: var(--amber); border-radius: 3px; }
+.score-bar-item .bar-num { font-family: 'Cinzel', serif; font-size: .75rem; font-weight: 700; color: var(--brown); }
+.tasting-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+.tasting-section { background: var(--cream); border-radius: 3px; padding: 16px 18px; }
+.tasting-section h4 { font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.tasting-section p { font-size: .88rem; color: var(--text); line-height: 1.6; }
+.mbd-take { background: var(--brown); color: var(--parch); padding: 16px 20px; border-radius: 3px; margin-top: 16px; }
+.mbd-take h4 { font-family: 'Cinzel', serif; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.mbd-take p { font-family: 'Playfair Display', serif; font-style: italic; font-size: .95rem; }
+@media (max-width: 600px) { .score-bars { grid-template-columns: 1fr 1fr; } .tasting-sections { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="site-nav"></div>
+<div class="page-banner">
+  <div class="eyebrow">Maryland Bourbon Dad</div>
+  <h1>The Flavor Profile Lab</h1>
+  <p>Deep-dive tasting notes with nose, palate, finish, and MBD scores. The most methodical part of this site.</p>
+</div>
+<div class="content-wrap">
+  <div class="lab-card">
+    <div class="lab-card-header">
+      <div><div class="bottle-name">Booker's 2025-02</div><div class="bottle-meta">Beam Suntory · Kentucky · ~127.5 proof · Cask Strength · ~$90</div></div>
+      <div class="score-block"><div class="mbd-score">94</div><div class="score-label">MBD Score</div></div>
+    </div>
+    <div class="score-bars">
+      <div class="score-bar-item"><div class="bar-label">Nose</div><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div><div class="bar-num">95</div></div>
+      <div class="score-bar-item"><div class="bar-label">Palate</div><div class="bar-track"><div class="bar-fill" style="width:94%"></div></div><div class="bar-num">94</div></div>
+      <div class="score-bar-item"><div class="bar-label">Finish</div><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><div class="bar-num">92</div></div>
+      <div class="score-bar-item"><div class="bar-label">Value</div><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div><div class="bar-num">88</div></div>
+    </div>
+    <div class="tasting-sections">
+      <div class="tasting-section"><h4>Nose</h4><p>Dark caramel, roasted oak, vanilla extract, and a whisper of dried cherry. The proof announces itself immediately — big but controlled. Caramelized sugar with underlying baking spice.</p></div>
+      <div class="tasting-section"><h4>Palate</h4><p>Dense and oily. Vanilla leads, followed by dark fruit and a building heat. Baking spice mid-palate with hints of toasted walnut and leather. The mouthfeel is exceptional for cask strength.</p></div>
+      <div class="tasting-section"><h4>Finish</h4><p>Long and warm. Oak tannins that aren't harsh, transitioning to a sweet vanilla and dried fruit note that lingers for a solid minute. No burn for the proof.</p></div>
+      <div class="tasting-section"><h4>Water Notes</h4><p>A few drops opens the nose considerably — more fruit comes through, some floral notes emerge. Both neat and with water are valid approaches.</p></div>
+    </div>
+    <div class="mbd-take"><h4>MBD Take</h4><p>Best Booker's batch in recent memory. If you see it at MSRP, buy it. Don't pay secondary. At around $90 this is exceptional value for a true cask strength expression with this level of complexity.</p></div>
+  </div>
+
+  <div class="lab-card">
+    <div class="lab-card-header">
+      <div><div class="bottle-name">Angel's Envy Triple Oak</div><div class="bottle-meta">Angel's Envy · Louisville, KY · 86 proof · Finished · ~$70</div></div>
+      <div class="score-block"><div class="mbd-score">92</div><div class="score-label">MBD Score</div></div>
+    </div>
+    <div class="score-bars">
+      <div class="score-bar-item"><div class="bar-label">Nose</div><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><div class="bar-num">92</div></div>
+      <div class="score-bar-item"><div class="bar-label">Palate</div><div class="bar-track"><div class="bar-fill" style="width:93%"></div></div><div class="bar-num">93</div></div>
+      <div class="score-bar-item"><div class="bar-label">Finish</div><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><div class="bar-num">90</div></div>
+      <div class="score-bar-item"><div class="bar-label">Value</div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div><div class="bar-num">85</div></div>
+    </div>
+    <div class="tasting-sections">
+      <div class="tasting-section"><h4>Nose</h4><p>Toffee and dried cherry upfront. The port cask influence is present but not overwhelming. Subtle earthiness that develops into something almost chocolatey with time in the glass.</p></div>
+      <div class="tasting-section"><h4>Palate</h4><p>Rich and layered. The triple finish adds complexity without muddying the profile. Dark fruit, baking spice, and a pronounced vanilla that feels earned rather than added. Softer mouthfeel than the proof suggests.</p></div>
+      <div class="tasting-section"><h4>Finish</h4><p>Medium-long. Fruit notes fade slowly, leaving a pleasant oak and spice note. Cleaner finish than the standard AE — the additional finishing seems to have resolved some of the rougher edges.</p></div>
+      <div class="tasting-section"><h4>Value Assessment</h4><p>$70 is fair for what you're getting. Not a steal, not a rip-off. The standard AE port finish is very good; this is better. The difference is meaningful enough to justify the price premium.</p></div>
+    </div>
+    <div class="mbd-take"><h4>MBD Take</h4><p>Skeptics of the finishing trend should taste this before writing it off. This is what the format looks like when it works — the three-cask process adds genuine complexity rather than just sweetness.</p></div>
+  </div>
+</div>
+<div id="site-footer"></div>
+<script src="nav.js"></script>
+</body>
+</html>
