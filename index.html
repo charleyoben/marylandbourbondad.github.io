@@ -100,18 +100,6 @@
         .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #D4C5B0; }
 
         /* Bottom nav - mobile only */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; right: 0; z-index: 900;
-            background: rgba(26,16,8,.97);
-            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border-top: 1px solid rgba(200,134,10,.3);
-            padding: 10px 0 env(safe-area-inset-bottom, 10px);
-            display: none;
-        }
-        @media (max-width: 767px) {
-            .bottom-nav { display: flex; }
-            .mob-spacer { height: 72px; }
-            .desktop-nav { display: none !important; }
             .desktop-only { display: none !important; }
         }
         @media (min-width: 768px) {
@@ -141,7 +129,6 @@
             <a href="distillery-scout.html" style="font-family:Georgia,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#EDE0C4;text-decoration:none;padding:5px 8px;border-radius:3px;" onmouseover="this.style.color='#C8860A'" onmouseout="this.style.color='#EDE0C4'">MD Distilleries</a>
             <a href="beyond-maryland.html"  style="font-family:Georgia,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#EDE0C4;text-decoration:none;padding:5px 8px;border-radius:3px;" onmouseover="this.style.color='#C8860A'" onmouseout="this.style.color='#EDE0C4'">Beyond MD</a>
             <a href="flavor-lab.html"       style="font-family:Georgia,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#EDE0C4;text-decoration:none;padding:5px 8px;border-radius:3px;" onmouseover="this.style.color='#C8860A'" onmouseout="this.style.color='#EDE0C4'">Flavor Lab</a>
-            <a href="store.html"            style="font-family:Georgia,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#C8860A;text-decoration:none;padding:5px 8px;border:1px solid #C8860A;border-radius:3px;" onmouseover="this.style.background='#C8860A';this.style.color='#1A1008'" onmouseout="this.style.background='transparent';this.style.color='#C8860A'">Store</a>
         </div>
     </div>
 </nav>
@@ -394,8 +381,6 @@
             <a href="store.html"            class="feature-strip" style="padding:16px 18px;text-decoration:none;display:block;"><span style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:#C8860A;display:block;margin-bottom:4px;font-family:sans-serif;">Etsy</span><span style="font-family:Georgia,serif;font-weight:700;font-size:.875rem;color:#fff;">MBD Supply Co.</span></a>
         </div>
     </div>
-
-    <div class="mob-spacer"></div>
 </main>
 
 <!-- DESKTOP FOOTER -->
@@ -405,24 +390,6 @@
 </footer>
 
 <!-- MOBILE BOTTOM NAV -->
-<nav class="bottom-nav justify-around items-center px-2">
-    <a href="scout-report.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;min-width:44px;text-decoration:none;">
-        <span style="font-size:1.3rem;line-height:1;">🎯</span>
-        <span style="font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(200,134,10,.8);font-family:sans-serif;">Scout</span>
-    </a>
-    <a href="virtual-cabinet.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;min-width:44px;text-decoration:none;">
-        <span style="font-size:1.3rem;line-height:1;">🗄️</span>
-        <span style="font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);font-family:sans-serif;">Cabinet</span>
-    </a>
-    <a href="behind-the-bar.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;min-width:44px;text-decoration:none;">
-        <span style="font-size:1.3rem;line-height:1;">🍹</span>
-        <span style="font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);font-family:sans-serif;">Bar</span>
-    </a>
-    <a href="store.html" style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;min-width:44px;text-decoration:none;">
-        <span style="font-size:1.3rem;line-height:1;">🛒</span>
-        <span style="font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.5);font-family:sans-serif;">Store</span>
-    </a>
-</nav>
 
 </body>
 </html>
