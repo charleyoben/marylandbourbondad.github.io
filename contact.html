@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | Maryland Bourbon Dad</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'bourbon-bg':     '#F9F6F0',
+            'bourbon-text':   '#2D231E',
+            'bourbon-accent': '#C46210',
+            'bourbon-card':   '#EBE3D5',
+            'bourbon-border': '#D4C5B0',
+            'bourbon-muted':  '#7A6458',
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'Georgia', 'serif'],
+            body:    ['Montserrat', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body { background-color: #F9F6F0; color: #2D231E; font-family: 'Montserrat', sans-serif; }
+    input, select, textarea {
+      width: 100%;
+      background: #F9F6F0;
+      border: 1px solid #D4C5B0;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-family: 'Montserrat', sans-serif;
+      color: #2D231E;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #C46210;
+    }
+    textarea { resize: vertical; min-height: 130px; }
+    select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237A6458' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    .btn-primary {
+      background: #C46210;
+      color: #F9F6F0;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 28px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      width: 100%;
+    }
+    .btn-primary:hover { background: #a8520d; }
+    .btn-primary:active { transform: scale(0.98); }
+    .accent-bar { width: 40px; height: 3px; background: #C46210; border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV - Desktop -->
+  <nav style="background:#1A1008;border-bottom:2px solid #C8860A;position:sticky;top:0;z-index:950;padding:0 16px;">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px;">
+      <a href="index.html" style="font-family:Georgia,serif;font-size:1rem;font-weight:700;color:#C8860A;text-decoration:none;letter-spacing:.05em;">Maryland Bourbon Dad</a>
+      <div style="display:flex;gap:2px;align-items:center;flex-wrap:wrap;">
+        <a href="about.html"            style="font-family:Georgia,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#EDE0C4;text-decoration:none;padding:5px 8px;border-radius:3px;" onmouseover="this.style.color='#C8860A'" onmouseout="this.style.color='#EDE0C4'">About</a>
+        <a href="scout-report.html"     style="font-family:Georgia,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#EDE0C4;text-decoration:none;padding:5px 8px;border-radius:3px;" onmouseover="this.style.color='#C8860A'" onmouseout="this.style.color='#EDE0C4'">Scout Report</a>
+        <a href="the-pour.html"         style="font-family:Georgia,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#EDE0C4;text-decoration:none;padding:5px 8px;border-radius:3px;" onmouseover="this.style.color='#C8860A'" onmouseout="this.style.color='#EDE0C4'">The Pour</a>
+        <a href="behind-the-bar.html"   style="font-family:Georgia,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#EDE0C4;text-decoration:none;padding:5px 8px;border-radius:3px;" onmouseover="this.style.color='#C8860A'" onmouseout="this.style.color='#EDE0C4'">Behind the Bar</a>
+        <a href="field-notes.html"      style="font-family:Georgia,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#EDE0C4;text-decoration:none;padding:5px 8px;border-radius:3px;" onmouseover="this.style.color='#C8860A'" onmouseout="this.style.color='#EDE0C4'">Field Notes</a>
+        <a href="kitchen.html"          style="font-family:Georgia,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#EDE0C4;text-decoration:none;padding:5px 8px;border-radius:3px;" onmouseover="this.style.color='#C8860A'" onmouseout="this.style.color='#EDE0C4'">Kitchen</a>
+        <a href="virtual-cabinet.html"  style="font-family:Georgia,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#EDE0C4;text-decoration:none;padding:5px 8px;border-radius:3px;" onmouseover="this.style.color='#C8860A'" onmouseout="this.style.color='#EDE0C4'">Cabinet</a>
+        <a href="store.html"            style="font-family:Georgia,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#EDE0C4;text-decoration:none;padding:5px 8px;border-radius:3px;" onmouseover="this.style.color='#C8860A'" onmouseout="this.style.color='#EDE0C4'">Store</a>
+        <a href="contact.html"          style="font-family:Georgia,serif;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#C8860A;text-decoration:none;padding:5px 8px;border-radius:3px;font-weight:700;">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE CONTENT -->
+  <main class="max-w-2xl mx-auto px-4 py-12 md:py-20">
+
+    <!-- Eyebrow + heading -->
+    <div class="mb-10">
+      <p class="text-xs font-semibold uppercase tracking-widest text-bourbon-muted mb-3">Get in touch</p>
+      <div class="accent-bar mb-5"></div>
+      <h1 class="font-display text-4xl md:text-5xl font-bold text-bourbon-text leading-tight mb-4">Say hello.</h1>
+      <p class="text-bourbon-muted text-base leading-relaxed max-w-lg">
+        Got a bottle recommendation, a question about something in the shop, or just want to talk bourbon?
+        I'm genuinely happy to hear from you. I read everything and try to respond within a few days.
+      </p>
+    </div>
+
+    <!-- Form card -->
+    <div class="bg-bourbon-card border border-bourbon-border rounded-xl p-6 md:p-8 mb-8">
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+        <!-- Name + Email row -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-bourbon-muted mb-2">Name</label>
+            <input type="text" name="name" placeholder="Your name" required />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-bourbon-muted mb-2">Email</label>
+            <input type="email" name="email" placeholder="you@example.com" required />
+          </div>
+        </div>
+
+        <!-- Topic dropdown -->
+        <div class="mb-4">
+          <label class="block text-xs font-semibold uppercase tracking-wider text-bourbon-muted mb-2">What's this about?</label>
+          <select name="topic">
+            <option value="" disabled selected>Select one</option>
+            <option value="hello">Just saying hello</option>
+            <option value="shop">Shop or product question</option>
+            <option value="rec">Bottle recommendation or tip</option>
+            <option value="collab">Collaboration or partnership</option>
+            <option value="media">Media or press inquiry</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+
+        <!-- Message -->
+        <div class="mb-6">
+          <label class="block text-xs font-semibold uppercase tracking-wider text-bourbon-muted mb-2">Message</label>
+          <textarea name="message" placeholder="What's on your mind?" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary">Send it</button>
+
+        <p class="text-xs text-bourbon-muted mt-4 leading-relaxed">
+          No spam, no newsletters you didn't sign up for. If you want those,
+          <a href="index.html#newsletter" class="underline hover:text-bourbon-accent transition-colors">there's a signup for that</a> —
+          this is just a direct line to me.
+        </p>
+
+      </form>
+    </div>
+
+    <!-- Direct email fallback -->
+    <div class="flex items-start gap-4 px-2">
+      <div class="mt-0.5">
+        <svg width="18" height="18" fill="none" stroke="#C46210" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+      </div>
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-wider text-bourbon-muted mb-1">Prefer email?</p>
+        <a href="mailto:hello@marylandbourbondad.com" class="text-sm font-medium text-bourbon-text hover:text-bourbon-accent transition-colors">
+          hello@marylandbourbondad.com
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="border-top:1px solid #D4C5B0;text-align:center;padding:36px 16px;margin-top:4rem;">
+    <p style="font-family:Georgia,serif;font-size:1.15rem;color:#C8860A;margin-bottom:6px;font-weight:700;">Maryland Bourbon Dad</p>
+    <p style="font-size:.6rem;color:#aaa;text-transform:uppercase;letter-spacing:.4em;font-family:sans-serif;">Est. 2024 · Columbia, MD · Seek. Sip. Savor the Moment.</p>
+    <div style="display:flex;justify-content:center;gap:20px;margin-top:16px;">
+      <a href="index.html"   style="font-family:sans-serif;font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:#aaa;text-decoration:none;" onmouseover="this.style.color='#C8860A'" onmouseout="this.style.color='#aaa'">Home</a>
+      <a href="about.html"   style="font-family:sans-serif;font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:#aaa;text-decoration:none;" onmouseover="this.style.color='#C8860A'" onmouseout="this.style.color='#aaa'">About</a>
+      <a href="store.html"   style="font-family:sans-serif;font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:#aaa;text-decoration:none;" onmouseover="this.style.color='#C8860A'" onmouseout="this.style.color='#aaa'">Store</a>
+      <a href="contact.html" style="font-family:sans-serif;font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:#C8860A;text-decoration:none;font-weight:700;">Contact</a>
+    </div>
+  </footer>
+
+</body>
+</html>
