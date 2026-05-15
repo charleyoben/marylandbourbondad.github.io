@@ -100,7 +100,10 @@
 
     <!-- Form card -->
     <div class="bg-bourbon-card border border-bourbon-border rounded-xl p-6 md:p-8 mb-8">
-      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <form action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="8c4301ab-26db-4a9b-9810-a048c017e952" />
+        <input type="hidden" name="subject" value="New MBD Contact Form Submission" />
+        <input type="hidden" name="redirect" value="false" />
 
         <!-- Name + Email row -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
